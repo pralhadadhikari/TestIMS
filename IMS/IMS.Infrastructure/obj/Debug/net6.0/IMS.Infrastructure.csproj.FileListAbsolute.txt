@@ -1,0 +1,17 @@
+D:\dotnetprog\IMS\IMS.Infrastructure\bin\Debug\net6.0\IMS.Infrastructure.deps.json
+D:\dotnetprog\IMS\IMS.Infrastructure\bin\Debug\net6.0\IMS.Infrastructure.dll
+D:\dotnetprog\IMS\IMS.Infrastructure\bin\Debug\net6.0\IMS.Infrastructure.pdb
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.csproj.AssemblyReference.cache
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.AssemblyInfoInputs.cache
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.AssemblyInfo.cs
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.csproj.CoreCompileInputs.cache
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.dll
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\refint\IMS.Infrastructure.dll
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.pdb
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\ref\IMS.Infrastructure.dll
+D:\dotnetprog\IMS\IMS.Infrastructure\bin\Debug\net6.0\IMS.Models.dll
+D:\dotnetprog\IMS\IMS.Infrastructure\bin\Debug\net6.0\IMS.Models.pdb
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.csproj.CopyComplete
+D:\dotnetprog\IMS\IMS.Infrastructure\bin\Debug\net6.0\IMS.Infrastructure.runtimeconfig.json
+D:\dotnetprog\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.genruntimeconfig.cache

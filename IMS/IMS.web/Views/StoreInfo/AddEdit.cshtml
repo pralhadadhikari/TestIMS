@@ -1,0 +1,109 @@
+﻿@model IMS.Models.Entity.StoreInfo
+
+
+@{
+    ViewData["Title"] = "Store Management"; //Browser tab title
+
+    <!-- Display Content Box Title of the page ADD/EDIT based on model value-->
+    if (Model.Id > 0)
+    {
+        ViewData["ContentBoxTitle"] = "Update Store";
+    }
+    else
+    {
+        ViewData["ContentBoxTitle"] = "Add Store";
+    }
+}
+
+
+
+
+@if (Model.Id > 0)
+{
+    <div>
+        <p>Update</p>
+    </div>
+}
+else
+{
+    <div>
+        <p>Create</p>
+    </div>
+}
+
+<form method="post" asp-action="AddEdit">
+    <input asp-for="Id" hidden />
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="StoreName"></label>
+                <input class="form-control" asp-for="StoreName" />
+                <span asp-validation-for="StoreName"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="Address"></label>
+                <input class="form-control" asp-for="Address" />
+                <span asp-validation-for="Address"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="PhoneNumber"></label>
+                <input class="form-control" asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="RegistrationNo"></label>
+                <input class="form-control" asp-for="RegistrationNo" />
+                <span asp-validation-for="RegistrationNo"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="PanNo"></label>
+                <input class="form-control" asp-for="PanNo" />
+                <span asp-validation-for="PanNo"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="check-box">
+                    <input type="checkbox" asp-for="IsActive">
+                    <span class="checked1"></span>
+                    <p class="terms" for="">Is Active</p>
+                </label>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+
+            <a class="btn mt-2 btn-secondary" asp-action="Index">Back to List</a>
+
+        </div>
+
+        @if (Model.Id > 0)
+        {
+            <div class="col-6">
+                <button class="btn mt-2 btn-primary  float-end" type="submit">Update</button>
+            </div>
+        }
+        else
+        {
+            <div class="col-6">
+                <button class="btn mt-2 btn-primary  float-end" type="submit">Create</button>
+            </div>
+        }
+
+    </div>
+</form>

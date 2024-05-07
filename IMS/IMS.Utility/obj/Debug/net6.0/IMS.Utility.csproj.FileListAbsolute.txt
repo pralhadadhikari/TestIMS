@@ -1,0 +1,12 @@
+D:\dotnetprog\IMS\IMS.Utility\bin\Debug\net6.0\IMS.Utility.deps.json
+D:\dotnetprog\IMS\IMS.Utility\bin\Debug\net6.0\IMS.Utility.dll
+D:\dotnetprog\IMS\IMS.Utility\bin\Debug\net6.0\IMS.Utility.pdb
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.csproj.AssemblyReference.cache
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.GeneratedMSBuildEditorConfig.editorconfig
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.AssemblyInfoInputs.cache
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.AssemblyInfo.cs
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.csproj.CoreCompileInputs.cache
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.dll
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\refint\IMS.Utility.dll
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\IMS.Utility.pdb
+D:\dotnetprog\IMS\IMS.Utility\obj\Debug\net6.0\ref\IMS.Utility.dll

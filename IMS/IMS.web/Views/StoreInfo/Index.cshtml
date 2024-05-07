@@ -1,0 +1,72 @@
+﻿@model IEnumerable<IMS.Models.Entity.StoreInfo>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary float-end" asp-action="AddEdit">Add New</a>
+    </div>
+</div>
+
+<div class="row col-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Store Name
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Registraton No
+                </th>
+                <th>
+                    Pan No
+                </th>
+                <th>
+                    IsActive
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach(var items in Model){
+                <tr>
+                    <td>
+                        @items.StoreName
+                    </td>
+                    <td>
+                        @items.Address
+                    </td>
+                    <td>
+                        @items.PhoneNumber
+                    </td>
+                    <td>
+                        @items.RegistrationNo
+                    </td>
+                    <td>
+                        @items.PanNo
+                    </td>
+                    <td>
+                        @items.IsActive
+                    </td>
+                    <td>
+                       <a class="btn btn-primary btn-sm" asp-action="AddEdit" asp-route-id="@items.Id" >Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@items.Id">Delete</a>
+                    </td>
+                                       
+                </tr>
+            }
+
+
+
+        </tbody>
+
+    </table>
+
+</div>
