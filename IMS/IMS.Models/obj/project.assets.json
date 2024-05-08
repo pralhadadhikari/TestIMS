@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dotnetprog\\IMS\\IMS.Models\\IMS.Models.csproj",
+      "projectUniqueName": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\IMS.Models.csproj",
       "projectName": "IMS.Models",
-      "projectPath": "D:\\dotnetprog\\IMS\\IMS.Models\\IMS.Models.csproj",
+      "projectPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\IMS.Models.csproj",
       "packagesPath": "C:\\Users\\safar\\.nuget\\packages\\",
-      "outputPath": "D:\\dotnetprog\\IMS\\IMS.Models\\obj\\",
+      "outputPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\safar\\AppData\\Roaming\\NuGet\\NuGet.Config",

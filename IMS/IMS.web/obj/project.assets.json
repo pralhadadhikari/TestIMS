@@ -11152,11 +11152,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dotnetprog\\IMS\\IMS.web\\IMS.web.csproj",
+      "projectUniqueName": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\IMS.web.csproj",
       "projectName": "IMS.web",
-      "projectPath": "D:\\dotnetprog\\IMS\\IMS.web\\IMS.web.csproj",
+      "projectPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\IMS.web.csproj",
       "packagesPath": "C:\\Users\\safar\\.nuget\\packages\\",
-      "outputPath": "D:\\dotnetprog\\IMS\\IMS.web\\obj\\",
+      "outputPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\safar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11173,14 +11173,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\dotnetprog\\IMS\\IMS.Infrastructure\\IMS.Infrastructure.csproj": {
-              "projectPath": "D:\\dotnetprog\\IMS\\IMS.Infrastructure\\IMS.Infrastructure.csproj"
+            "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Infrastructure\\IMS.Infrastructure.csproj": {
+              "projectPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Infrastructure\\IMS.Infrastructure.csproj"
             },
-            "D:\\dotnetprog\\IMS\\IMS.Models\\IMS.Models.csproj": {
-              "projectPath": "D:\\dotnetprog\\IMS\\IMS.Models\\IMS.Models.csproj"
+            "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\IMS.Models.csproj": {
+              "projectPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\IMS.Models.csproj"
             },
-            "D:\\dotnetprog\\IMS\\IMS.Utility\\IMS.Utility.csproj": {
-              "projectPath": "D:\\dotnetprog\\IMS\\IMS.Utility\\IMS.Utility.csproj"
+            "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Utility\\IMS.Utility.csproj": {
+              "projectPath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Utility\\IMS.Utility.csproj"
             }
           }
         }

@@ -1,6 +1,8 @@
 ﻿using IMS.Infrastructure.IRepository;
 using IMS.Models.Entity;
+using IMS.web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IMS.web.Controllers
@@ -9,10 +11,13 @@ namespace IMS.web.Controllers
     public class StoreInfoController : Controller
     {
         private readonly ICrudService<StoreInfo> _storeCrudService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public StoreInfoController(ICrudService<StoreInfo> storeCrudService)
+        public StoreInfoController(ICrudService<StoreInfo> storeCrudService,
+            UserManager<ApplicationUser> userManager)
         {
             _storeCrudService = storeCrudService;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -35,10 +40,11 @@ namespace IMS.web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEdit(StoreInfo storeInfo)
         {
+            var userId = _userManager.GetUserId(HttpContext.User);
             if (storeInfo.Id == 0)
             {
                 storeInfo.CreatedDate = DateTime.Now;
-                storeInfo.CreatedBy = "";
+                storeInfo.CreatedBy = userId;
                 await _storeCrudService.InsertAsync(storeInfo);
             }
             else
@@ -51,12 +57,17 @@ namespace IMS.web.Controllers
                 OrgStoreInfo.RegistrationNo = storeInfo.RegistrationNo;
                 OrgStoreInfo.IsActive=storeInfo.IsActive;
                 OrgStoreInfo.ModifiedDate = DateTime.Now;
-                OrgStoreInfo.ModifiedBy = "";
+                OrgStoreInfo.ModifiedBy = userId;
                 await _storeCrudService.UpdateAsync(OrgStoreInfo);
             }
             return RedirectToAction(nameof(Index));
         }
 
-
+        public async Task<IActionResult> Delete(int id)
+        {
+            var storeInfo= await _storeCrudService.GetAsync(id);
+            _storeCrudService.Delete(storeInfo);
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bK0HGqfzR4F90QAsxV8kamTwbvXisE6NzL3IoSZyvfJfKhW2iHRgn85V5mP0NY3Uoxn49qIOcxox+3Ib5LgT9A==",
+  "dgSpecHash": "Dc7hRl73zq+Tkq+2/8aJ0kcsYjQPbkMasP0sSVuR3TiIttYO0Ahwbl8baoUAO9YYqF+Lb3mKC2659X27UM6jJw==",
   "success": true,
-  "projectFilePath": "D:\\dotnetprog\\IMS\\IMS.Models\\IMS.Models.csproj",
+  "projectFilePath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\IMS.Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

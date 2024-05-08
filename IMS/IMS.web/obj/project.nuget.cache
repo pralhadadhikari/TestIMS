@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RwRXnrhF/qTCOFtQEYoqEsv+iqptWw4Crdd2qZBaHk1fk5U9AdsT2XRIpImaYZCSLgObYO3fWDetzdtT3x0FMw==",
+  "dgSpecHash": "iw6lIXhq3l5dT9FG4GPCuMPx07x7ELZftM5DQx7HIVJ33TlzyIQNaZagAn+RD9/U+CpwMYAGtyWSVmlhFtUaQg==",
   "success": true,
-  "projectFilePath": "D:\\dotnetprog\\IMS\\IMS.web\\IMS.web.csproj",
+  "projectFilePath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\IMS.web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\safar\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\safar\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

@@ -10,3 +10,15 @@ D:\dotnetprog\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.dll
 D:\dotnetprog\IMS\IMS.Models\obj\Debug\net6.0\refint\IMS.Models.dll
 D:\dotnetprog\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.pdb
 D:\dotnetprog\IMS\IMS.Models\obj\Debug\net6.0\ref\IMS.Models.dll
+D:\dotnetprog\TestIMS\IMS\IMS.Models\bin\Debug\net6.0\IMS.Models.deps.json
+D:\dotnetprog\TestIMS\IMS\IMS.Models\bin\Debug\net6.0\IMS.Models.dll
+D:\dotnetprog\TestIMS\IMS\IMS.Models\bin\Debug\net6.0\IMS.Models.pdb
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.csproj.AssemblyReference.cache
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.AssemblyInfoInputs.cache
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.AssemblyInfo.cs
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.csproj.CoreCompileInputs.cache
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.dll
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\refint\IMS.Models.dll
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.pdb
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\ref\IMS.Models.dll
