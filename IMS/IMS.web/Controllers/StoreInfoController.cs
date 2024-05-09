@@ -40,33 +40,54 @@ namespace IMS.web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEdit(StoreInfo storeInfo)
         {
-            var userId = _userManager.GetUserId(HttpContext.User);
-            if (storeInfo.Id == 0)
+            if (ModelState.IsValid)
             {
-                storeInfo.CreatedDate = DateTime.Now;
-                storeInfo.CreatedBy = userId;
-                await _storeCrudService.InsertAsync(storeInfo);
+                try
+                {
+                    var userId = _userManager.GetUserId(HttpContext.User);
+                    if (storeInfo.Id == 0)
+                    {
+                        storeInfo.CreatedDate = DateTime.Now;
+                        storeInfo.CreatedBy = userId;
+                        await _storeCrudService.InsertAsync(storeInfo);
+
+                        TempData["success"] = "Data Added Sucessfully";
+                    }
+                    else
+                    {
+                        var OrgStoreInfo = await _storeCrudService.GetAsync(storeInfo.Id);
+                        OrgStoreInfo.StoreName = storeInfo.StoreName;
+                        OrgStoreInfo.Address = storeInfo.Address;
+                        OrgStoreInfo.PhoneNumber = storeInfo.PhoneNumber;
+                        OrgStoreInfo.PanNo = storeInfo.PanNo;
+                        OrgStoreInfo.RegistrationNo = storeInfo.RegistrationNo;
+                        OrgStoreInfo.IsActive = storeInfo.IsActive;
+                        OrgStoreInfo.ModifiedDate = DateTime.Now;
+                        OrgStoreInfo.ModifiedBy = userId;
+                        await _storeCrudService.UpdateAsync(OrgStoreInfo);
+                        TempData["success"] = "Data Updated Sucessfully";
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                catch(Exception)
+                {
+                    TempData["error"] = "Something went wrong, please try again later";
+                    return RedirectToAction(nameof(AddEdit));
+                }
             }
-            else
-            {
-                var OrgStoreInfo = await _storeCrudService.GetAsync(storeInfo.Id);
-                OrgStoreInfo.StoreName=storeInfo.StoreName;
-                OrgStoreInfo.Address = storeInfo.Address;
-                OrgStoreInfo.PhoneNumber=storeInfo.PhoneNumber;
-                OrgStoreInfo.PanNo = storeInfo.PanNo;
-                OrgStoreInfo.RegistrationNo = storeInfo.RegistrationNo;
-                OrgStoreInfo.IsActive=storeInfo.IsActive;
-                OrgStoreInfo.ModifiedDate = DateTime.Now;
-                OrgStoreInfo.ModifiedBy = userId;
-                await _storeCrudService.UpdateAsync(OrgStoreInfo);
-            }
-            return RedirectToAction(nameof(Index));
+            
+            TempData["error"] = "Please input Valid Data";
+            return RedirectToAction(nameof(AddEdit));
         }
+                
+
+        
 
         public async Task<IActionResult> Delete(int id)
         {
             var storeInfo= await _storeCrudService.GetAsync(id);
             _storeCrudService.Delete(storeInfo);
+            TempData["error"] = "Data Deleted Sucessfully";
             return RedirectToAction("Index");
         }
     }

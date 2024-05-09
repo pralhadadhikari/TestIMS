@@ -514,3 +514,4 @@ D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\refint\IMS.web.dll
 D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\IMS.web.pdb
 D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\IMS.web.genruntimeconfig.cache
 D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\ref\IMS.web.dll
+D:\dotnetprog\TestIMS\IMS\IMS.web\bin\Debug\net6.0\bundleconfig.json

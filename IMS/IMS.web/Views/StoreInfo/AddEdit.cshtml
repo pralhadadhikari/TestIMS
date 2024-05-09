@@ -38,7 +38,7 @@ else
             <div class="form-group">
                 <label class="form-label" asp-for="StoreName"></label>
                 <input class="form-control" asp-for="StoreName" />
-                <span asp-validation-for="StoreName"></span>
+                <span class="text-danger" asp-validation-for="StoreName"></span>
             </div>
         </div>
         <div class="col-6">
@@ -50,13 +50,13 @@ else
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        @*<div class="col-6">
             <div class="form-group">
                 <label class="form-label" asp-for="PhoneNumber"></label>
                 <input class="form-control" asp-for="PhoneNumber" />
                 <span asp-validation-for="PhoneNumber"></span>
             </div>
-        </div>
+        </div>*@
         <div class="col-6">
             <div class="form-group">
                 <label class="form-label" asp-for="RegistrationNo"></label>
@@ -107,3 +107,11 @@ else
 
     </div>
 </form>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
