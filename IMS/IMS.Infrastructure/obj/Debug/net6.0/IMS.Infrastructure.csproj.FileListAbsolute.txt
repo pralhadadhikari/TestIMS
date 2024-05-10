@@ -26,9 +26,10 @@ D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.AssemblyInfoInputs.cache
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.AssemblyInfo.cs
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.csproj.CoreCompileInputs.cache
-D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.csproj.CopyComplete
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.dll
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\refint\IMS.Infrastructure.dll
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.pdb
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.genruntimeconfig.cache
 D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\ref\IMS.Infrastructure.dll
+D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infrastructure.sourcelink.json
+D:\dotnetprog\TestIMS\IMS\IMS.Infrastructure\obj\Debug\net6.0\IMS.Infr.A6A27735.Up2Date

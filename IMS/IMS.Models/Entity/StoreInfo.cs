@@ -9,12 +9,14 @@ namespace IMS.Models.Entity
 {
     public class StoreInfo:BaseEntity
     {
-        [Required]
+        [Required(ErrorMessage ="Please Input Store Name")]
+        
         [Display(Name ="*Store Name")]
         public string StoreName { get;set;}
         [Required]
         public string Address { get; set; }
         [Required]
+        [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         [Required]
