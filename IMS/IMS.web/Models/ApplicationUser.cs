@@ -10,7 +10,7 @@ namespace IMS.web.Models
         public string Address { get; set; }
         //public string PhoneNumber { get; set; }
         public int StoreId { get; set; }
-        public int UserRoleId { get; set; }
+        public string UserRoleId { get; set; }
         public string ProfileUrl { get; set; }  
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }

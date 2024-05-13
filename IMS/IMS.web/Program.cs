@@ -8,6 +8,7 @@ using IMS.Infrastructure;
 using IMS.Infrastructure.IRepository;
 using IMS.Infrastructure.Repository.CRUD;
 using IMS.Infrastructure.Repository;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,19 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("SUPERADMIN", policy => policy.RequireRole("SUPERADMIN"));
+//    options.AddPolicy("ADMIN", policy => policy.RequireRole("ADMIN"));
+//    options.AddPolicy("COUNTER", policy => policy.RequireRole("COUNTER"));
+//    options.AddPolicy("STORE", policy => policy.RequireRole("STORE"));
+//    options.AddPolicy("PUBLIC", policy => policy.RequireRole("PUBLIC"));
+//});
+//builder.Services.Configure<IdentityOptions>(options =>
+//{
+//    options.ClaimsIdentity.RoleClaimType = ClaimTypes.Role;
+//});
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
