@@ -57,6 +57,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 //    options.AddPolicy("STORE", policy => policy.RequireRole("STORE"));
 //    options.AddPolicy("PUBLIC", policy => policy.RequireRole("PUBLIC"));
 //});
+
+
 //builder.Services.Configure<IdentityOptions>(options =>
 //{
 //    options.ClaimsIdentity.RoleClaimType = ClaimTypes.Role;
