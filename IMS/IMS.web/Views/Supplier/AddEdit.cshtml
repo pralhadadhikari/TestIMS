@@ -1,17 +1,17 @@
-﻿@model IMS.Models.Entity.CategoryInfo
+﻿@model IMS.Models.Entity.SupplierInfo
 
 
 @{
-    ViewData["Title"] = "Category Management"; //Browser tab title
+    ViewData["Title"] = "Supplier Management"; //Browser tab title
 
     <!-- Display Content Box Title of the page ADD/EDIT based on model value-->
     if (Model.Id > 0)
     {
-        ViewData["ContentBoxTitle"] = "Update Store";
+        ViewData["ContentBoxTitle"] = "Update Supplier";
     }
     else
     {
-        ViewData["ContentBoxTitle"] = "Add Category";
+        ViewData["ContentBoxTitle"] = "Add Supplier";
     }
 }
 
@@ -36,21 +36,46 @@ else
     <div class="row">
         <div class="col-6">
             <div class="form-group">
-                <label class="form-label" asp-for="CategoryName"></label>
-                <input class="form-control" asp-for="CategoryName" />
-                <span class="text-danger" asp-validation-for="CategoryName"></span>
+                <label class="form-label" asp-for="SupplierName"></label>
+                <input class="form-control" asp-for="SupplierName" />
+                <span class="text-danger" asp-validation-for="SupplierName"></span>
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
-                <label class="form-label" asp-for="CategoryDescription"></label>
-                <input class="form-control" asp-for="CategoryDescription" />
-                <span asp-validation-for="CategoryDescription"></span>
+                <label class="form-label" asp-for="ContactPerson"></label>
+                <input class="form-control" asp-for="ContactPerson" />
+                <span asp-validation-for="ContactPerson"></span>
             </div>
         </div>
     </div>
 
     <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="PhoneNumber"></label>
+                <input class="form-control" asp-for="PhoneNumber" />
+                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="Email"></label>
+                <input class="form-control" asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="Address"></label>
+                <input class="form-control" asp-for="Address" />
+                <span class="text-danger" asp-validation-for="Address"></span>
+            </div>
+        </div>
+       
 
         <div class="col-6">
             <div class="form-group">

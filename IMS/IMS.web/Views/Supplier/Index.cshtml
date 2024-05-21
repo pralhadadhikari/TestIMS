@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IMS.Models.Entity.CategoryInfo>
+﻿@model IEnumerable<IMS.Models.Entity.SupplierInfo>
 
 <div class="row">
     <div class="col-12">
@@ -11,11 +11,21 @@
         <thead>
             <tr>
                 <th>
-                   @Html.DisplayNameFor(p=>p.CategoryName)
+                    @Html.DisplayNameFor(p => p.SupplierName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(p => p.CategoryDescription)
-                </th>                
+                    @Html.DisplayNameFor(p => p.ContactPerson)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.Address)
+                </th>
+                
                 <th>
                     @Html.DisplayNameFor(p => p.IsActive)
                 </th>
@@ -30,17 +40,27 @@
             {
                 <tr>
                     <td>
-                        @items.CategoryName
+                        @items.SupplierName
                     </td>
                     <td>
-                        @items.CategoryDescription
-                    </td>                    
+                        @items.ContactPerson
+                    </td>
+                    <td>
+                        @items.PhoneNumber
+                    </td>
+                    <td>
+                        @items.Email
+                    </td>
+                    <td>
+                        @items.Address
+                    </td>
+                   
                     <td>
                         @items.IsActive
                     </td>
                     <td>
                         <a class="btn btn-primary btn-sm" asp-action="AddEdit" asp-route-id="@items.Id">Edit</a>
-                     </td>
+                    </td>
 
                 </tr>
             }

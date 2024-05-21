@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IMS.Models.Entity.CategoryInfo>
+﻿@model IEnumerable<IMS.Models.Entity.CustomerInfo>
 
 <div class="row">
     <div class="col-12">
@@ -11,14 +11,21 @@
         <thead>
             <tr>
                 <th>
-                   @Html.DisplayNameFor(p=>p.CategoryName)
+                    @Html.DisplayNameFor(p => p.CustomerName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(p => p.CategoryDescription)
-                </th>                
-                <th>
-                    @Html.DisplayNameFor(p => p.IsActive)
+                    @Html.DisplayNameFor(p => p.PhoneNumber)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.PanNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.Email)
+                </th>
+
                 <th>
                     Action
                 </th>
@@ -30,17 +37,24 @@
             {
                 <tr>
                     <td>
-                        @items.CategoryName
+                        @items.CustomerName
                     </td>
                     <td>
-                        @items.CategoryDescription
-                    </td>                    
-                    <td>
-                        @items.IsActive
+                        @items.PhoneNumber
                     </td>
+                    <td>
+                        @items.PanNo
+                    </td>
+                    <td>
+                        @items.Address
+                    </td>
+                    <td>
+                        @items.Email
+                    </td>
+
                     <td>
                         <a class="btn btn-primary btn-sm" asp-action="AddEdit" asp-route-id="@items.Id">Edit</a>
-                     </td>
+                    </td>
 
                 </tr>
             }

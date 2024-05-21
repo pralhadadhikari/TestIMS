@@ -1,17 +1,17 @@
-﻿@model IMS.Models.Entity.CategoryInfo
+﻿@model IMS.Models.Entity.UnitInfo
 
 
 @{
-    ViewData["Title"] = "Category Management"; //Browser tab title
+    ViewData["Title"] = "Unit Management"; //Browser tab title
 
     <!-- Display Content Box Title of the page ADD/EDIT based on model value-->
     if (Model.Id > 0)
     {
-        ViewData["ContentBoxTitle"] = "Update Store";
+        ViewData["ContentBoxTitle"] = "Update Unit";
     }
     else
     {
-        ViewData["ContentBoxTitle"] = "Add Category";
+        ViewData["ContentBoxTitle"] = "Add Unit";
     }
 }
 
@@ -36,21 +36,12 @@ else
     <div class="row">
         <div class="col-6">
             <div class="form-group">
-                <label class="form-label" asp-for="CategoryName"></label>
-                <input class="form-control" asp-for="CategoryName" />
-                <span class="text-danger" asp-validation-for="CategoryName"></span>
+                <label class="form-label" asp-for="UnitName"></label>
+                <input class="form-control" asp-for="UnitName" />
+                <span class="text-danger" asp-validation-for="UnitName"></span>
             </div>
         </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label class="form-label" asp-for="CategoryDescription"></label>
-                <input class="form-control" asp-for="CategoryDescription" />
-                <span asp-validation-for="CategoryDescription"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
+        
 
         <div class="col-6">
             <div class="form-group">
