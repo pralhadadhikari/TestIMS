@@ -49,6 +49,40 @@ namespace IMS.Infrastructure.Entity_Configuration
             builder.Property(e => e.ModifiedBy)                
                 .IsUnicode(true);
 
+            builder.HasMany(e => e.CategoryInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.CustomerInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+            builder.HasMany(e => e.ProductInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.ProductInvoiceInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.ProductRateInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.RackInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.StockInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.SupplierInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
+
+            builder.HasMany(e => e.TransactionInfos)
+                .WithOne(pt => pt.StoreInfo)
+                .HasForeignKey(e => e.StoreInfoId);
         }
     }
 }

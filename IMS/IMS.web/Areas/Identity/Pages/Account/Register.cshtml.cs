@@ -152,7 +152,7 @@ namespace IMS.web.Areas.Identity.Pages.Account
                 user.MiddleName = Input.MiddleName;
                 user.LastName = Input.LastName;
                 user.Address = Input.Address;
-                
+                user.StoreId = Input.StoreId;
                 user.CreatedDate = DateTime.Now;
                 user.IsActive = true;
 

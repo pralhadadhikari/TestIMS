@@ -12,7 +12,7 @@ namespace IMS.Models.Entity
         public int ProductRateInfoId { get; set; }
         public float Rate { get;set; }
         public float Quantity { get;set; }
-        public double Amount { get;set; }        
+        public float Amount { get;set; }        
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }    
         public virtual ProductInvoiceInfo ProductInvoiceInfo { get; set; }

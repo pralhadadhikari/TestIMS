@@ -30,7 +30,8 @@ namespace IMS.web.Controllers
         public async Task<IActionResult> AddEdit(int id)
         {
             StoreInfo storeInfo = new StoreInfo();
-            if(id > 0)
+            storeInfo.IsActive = true;
+            if (id > 0)
             {
                 storeInfo = await _storeCrudService.GetAsync(id);
             }

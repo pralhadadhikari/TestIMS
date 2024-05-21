@@ -24,13 +24,13 @@ namespace IMS.Infrastructure.Entity_Configuration
                 .HasColumnType("datetime");
 
             builder.Property(e => e.NetAmount)
-                .HasColumnType("double");
+                .HasColumnType("float");
 
             builder.Property(e => e.DiscountAmount)
-                .HasColumnType("double");
+                .HasColumnType("float");
 
             builder.Property(e => e.TotalAmount)
-                .HasColumnType("double");
+                .HasColumnType("float");
 
             builder.Property(e => e.Remarks)
                 .HasMaxLength(200)
@@ -44,13 +44,14 @@ namespace IMS.Infrastructure.Entity_Configuration
                 .IsUnicode(true);
 
             builder.HasOne(e => e.StoreInfo)
-            .WithMany(pt => pt.ProductInvoiceInfos)
-            .HasForeignKey(e => e.StoreInfoId);
+                .WithMany(pt => pt.ProductInvoiceInfos)
+                .HasForeignKey(e => e.StoreInfoId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(e => e.CustomerInfo)
             .WithMany(pt => pt.ProductInvoiceInfos)
-            .HasForeignKey(e => e.CustomerInfoId);
-
+            .HasForeignKey(e => e.CustomerInfoId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(e => e.ProductInvoiceDetailInfos)
             .WithOne(pt => pt.ProductInvoiceInfo)

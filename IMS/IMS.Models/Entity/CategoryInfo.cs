@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -9,7 +10,11 @@ namespace IMS.Models.Entity
 {
     public class CategoryInfo:BaseEntity
     {
+        [Required]
+        [Display(Name ="Category")]
         public string CategoryName {  get; set; }
+        [Required]
+        [Display(Name = "Description")]
         public string CategoryDescription { get; set; }
         public int StoreInfoId { get; set; }
         public bool IsActive { get; set; }

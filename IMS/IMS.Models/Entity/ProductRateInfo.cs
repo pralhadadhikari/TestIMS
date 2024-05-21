@@ -18,7 +18,7 @@ namespace IMS.Models.Entity
         public float RemainingQuantity { get; set; }
         public string BatchNo { get; set; }
         public DateTime PurchasedDate { get; set; }
-        public DateTime Expirydate { get; set; }
+        public DateTime? Expirydate { get; set; }
         public int SupplierInfoId { get; set; }
         public int RackInfoId { get; set; }
         public bool IsActive { get; set; }

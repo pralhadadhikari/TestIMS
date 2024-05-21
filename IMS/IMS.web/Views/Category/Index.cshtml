@@ -1,0 +1,55 @@
+﻿@model IEnumerable<IMS.Models.Entity.CategoryInfo>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary float-end" asp-action="AddEdit">Add New</a>
+    </div>
+</div>
+
+<div class="row col-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                   @Html.DisplayNameFor(p=>p.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.CategoryDescription)
+                </th>                
+                <th>
+                    @Html.DisplayNameFor(p => p.IsActive)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var items in Model)
+            {
+                <tr>
+                    <td>
+                        @items.CategoryName
+                    </td>
+                    <td>
+                        @items.CategoryDescription
+                    </td>                    
+                    <td>
+                        @items.IsActive
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="AddEdit" asp-route-id="@items.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" onclick="return confirm('Are you sure you want to delete')" asp-route-id="@items.Id">Delete</a>
+                    </td>
+
+                </tr>
+            }
+
+
+
+        </tbody>
+
+    </table>
+
+</div>

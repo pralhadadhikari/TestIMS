@@ -26,7 +26,7 @@ namespace IMS.Infrastructure.Entity_Configuration
 
 
             builder.Property(e => e.Amount)
-               .HasColumnType("double");
+               .HasColumnType("float");
 
 
             builder.HasOne(e => e.ProductInvoiceInfo)
@@ -35,9 +35,10 @@ namespace IMS.Infrastructure.Entity_Configuration
 
             builder.HasOne(e => e.ProductRateInfo)
             .WithMany(pt => pt.ProductInvoiceDetailInfos)
-            .HasForeignKey(e => e.ProductRateInfoId);
+            .HasForeignKey(e => e.ProductRateInfoId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-            
+
             builder.Property(e => e.CreatedDate)
                 .IsRequired()
                 .HasDefaultValueSql("GETDATE()");

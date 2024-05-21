@@ -1,0 +1,96 @@
+﻿@model IMS.Models.Entity.CategoryInfo
+
+
+@{
+    ViewData["Title"] = "Category Management"; //Browser tab title
+
+    <!-- Display Content Box Title of the page ADD/EDIT based on model value-->
+    if (Model.Id > 0)
+    {
+        ViewData["ContentBoxTitle"] = "Update Store";
+    }
+    else
+    {
+        ViewData["ContentBoxTitle"] = "Add Category";
+    }
+}
+
+
+
+
+@if (Model.Id > 0)
+{
+    <div>
+        <p>Update</p>
+    </div>
+}
+else
+{
+    <div>
+        <p>Create</p>
+    </div>
+}
+
+<form method="post" asp-action="AddEdit">
+    <input asp-for="Id" hidden />
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="CategoryName"></label>
+                <input class="form-control" asp-for="CategoryName" />
+                <span class="text-danger" asp-validation-for="CategoryName"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="form-label" asp-for="CategoryDescription"></label>
+                <input class="form-control" asp-for="CategoryDescription" />
+                <span asp-validation-for="CategoryDescription"></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        
+        <div class="col-6">
+            <div class="form-group">
+                <label class="check-box">
+                    <input type="checkbox" asp-for="IsActive">
+                    <span class="checked1"></span>
+                    <p class="terms" for="">Is Active</p>
+                </label>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+
+            <a class="btn mt-2 btn-secondary" asp-action="Index">Back to List</a>
+
+        </div>
+
+        @if (Model.Id > 0)
+        {
+            <div class="col-6">
+                <button class="btn mt-2 btn-primary  float-end" type="submit">Update</button>
+            </div>
+        }
+        else
+        {
+            <div class="col-6">
+                <button class="btn mt-2 btn-primary  float-end" type="submit">Create</button>
+            </div>
+        }
+
+    </div>
+</form>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
