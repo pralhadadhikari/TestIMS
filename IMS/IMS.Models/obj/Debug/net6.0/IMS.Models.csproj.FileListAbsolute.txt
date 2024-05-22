@@ -22,3 +22,4 @@ D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\refint\IMS.Models.dll
 D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.pdb
 D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\ref\IMS.Models.dll
 D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.sourcelink.json
+D:\dotnetprog\TestIMS\IMS\IMS.Models\obj\Debug\net6.0\IMS.Models.csproj.AssemblyReference.cache

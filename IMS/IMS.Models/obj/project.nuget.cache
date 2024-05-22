@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "bDGBF70aFd341dqYR7igD4BbhpeXCTZiakuRLi9WgtVAzOdHe9N3isVAxJw6p13bBTTL3XrKEeQJwotCBj6Idg==",
+  "dgSpecHash": "L1pqEhQeTNY/p/8+XRUSn7r6Ktx9l4mRkD4ZeKR5drPPbDscYIyS7ssABE+3eDQP58ERGspexJmA+UPJuvrGjA==",
   "success": true,
   "projectFilePath": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.Models\\IMS.Models.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\safar\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\safar\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\safar\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

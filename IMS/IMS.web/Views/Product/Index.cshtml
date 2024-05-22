@@ -1,0 +1,73 @@
+﻿@model IEnumerable<IMS.Models.Entity.ProductInfo>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary float-end" asp-action="AddEdit">Add New</a>
+    </div>
+</div>
+
+<div class="row col-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(p => p.CategoryInfoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.UnitInfoId)
+                </th>                
+                <th>
+                    @Html.DisplayNameFor(p => p.IsActive)
+                </th>
+
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var items in Model)
+            {
+                <tr>
+                    <td>
+                        @items.CategoryInfo.CategoryName
+                    </td>
+                   @*  <td>
+                            @foreach (var category in ViewBag.CategoryInfos)
+                            {
+                                if (category.Id == items.CategoryInfoId) 
+                                {
+                                    @category.CategoryName
+                                }
+                            }
+                        </td>
+                    *@
+
+                    <td>
+                        @items.ProductName
+                    </td>
+                    <td>
+                        @items.UnitInfo.UnitName
+                    </td>
+                    <td>
+                        @items.IsActive
+                    </td>
+                    
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="AddEdit" asp-route-id="@items.Id">Edit</a>
+                    </td>
+
+                </tr>
+            }
+
+
+
+        </tbody>
+
+    </table>
+
+</div>

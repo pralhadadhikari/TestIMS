@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,9 @@ namespace IMS.Models.Entity
         public string ProductName { get;set; }
         public string ProductDescription { get; set; }        
         public int UnitInfoId { get; set; }        
-        public int StoreInfoId { get; set; }       
+        public int StoreInfoId { get; set; }
+        [NotMapped]
+        public IFormFile ImageFile { get;set; }
         public string ImageUrl { get;set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
