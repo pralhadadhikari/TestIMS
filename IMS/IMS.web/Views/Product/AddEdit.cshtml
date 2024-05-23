@@ -94,11 +94,11 @@ else
             <div class="image-uploaded">
                 @if (!string.IsNullOrEmpty(Model?.ImageUrl))
                 {
-                    <img src="/@Model.ImageUrl" id="userPhotos" class="img-thumbnail align-center" style="height:200px;width:180px;">
+                    <img src="/@Model.ImageUrl" id="userPhotos" class="img-thumbnail align-center" style="height:200px;width:180px;" onerror="this.src = '../images/photo.jpg';">
                 }
                 else
                 {
-                    <img id="userPhoto" class="img-thumbnail align-center " style="height:200px;width:180px;">
+                    <img id="userPhoto" src="~/images/photo.jpg" class="img-thumbnail align-center " style="height:200px;width:180px;">
                 }
 
             </div>
@@ -155,28 +155,17 @@ else
 
                 var reader = new FileReader();
 
-                if ('@Model.Id' > 0) {
-                    if ('@Model.ImageUrl' == '') {
-                        reader.onload = function (e) {
-                            $('#userPhoto').attr('src', e.target.result);
-                        }
-
-                    }
-                    else {
-                        reader.onload = function (e) {
-                            $('#userPhotos').attr('src', e.target.result);
-                        }
-                    }
+                if ('@Model?.ImageUrl' == '') {
+                                reader.onload = function (e) {
+                                    $('#userPhoto').attr('src', e.target.result);
+                                }
                 }
                 else {
                     reader.onload = function (e) {
-                        $('#userPhoto').attr('src', e.target.result);
+                        $('#userPhotos').attr('src', e.target.result);
                     }
                 }
-
                 reader.readAsDataURL(input.files[0]);
-
-
             }
         }
 

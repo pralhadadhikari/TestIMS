@@ -1,0 +1,89 @@
+﻿@model IEnumerable<IMS.Models.Entity.ProductRateInfo>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary float-end" asp-action="AddEdit">Add New</a>
+    </div>
+</div>
+
+
+<div class="row col-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(p => p.CategoryInfoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.ProductInfoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.CostPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.RemainingQuantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.ProductInfo.UnitInfoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.RackInfoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(p => p.BatchNo)
+                </th>                              
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var items in Model)
+            {
+                <tr>
+                    <td>
+                        @items.CategoryInfo.CategoryName
+                    </td>
+                    <td>
+                        @items.ProductInfo.ProductName
+                    </td>
+                    <td>
+                        @items.CostPrice
+                    </td>
+                    <td>
+                        @items.Quantity
+                    </td>
+                    <td>
+                        @items.RemainingQuantity
+                    </td>
+                    <td>
+                        @items.ProductInfo.UnitInfo.UnitName
+                    </td>
+                    <td>
+                        @items.ProductInfo.ProductName
+                    </td>
+                    <td>
+                        @items.RackInfo.RackName
+                    </td>
+                    <td>
+                        @items.BatchNo
+                    </td>
+
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="AddEdit" asp-route-id="@items.Id">Edit</a>
+                    </td>
+
+                </tr>
+            }
+
+
+
+        </tbody>
+
+    </table>
+
+</div>
