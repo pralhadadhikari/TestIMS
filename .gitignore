@@ -21,3 +21,6 @@ IMS/.vs/ProjectEvaluation/ims.metadata.v5.1
 IMS/.vs/ProjectEvaluation/ims.metadata.v7.bin
 IMS/.vs/ProjectEvaluation/ims.projects.v5.1
 IMS/.vs/ProjectEvaluation/ims.projects.v7.bin
+*.v2
+*.v2
+/IMS/.vs/IMS/v17

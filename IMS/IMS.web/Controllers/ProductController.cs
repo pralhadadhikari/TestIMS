@@ -43,11 +43,11 @@ namespace IMS.web.Controllers
             ProductInfo productInfo = new ProductInfo();
             ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
+            productInfo.IsActive = true;
             if (id > 0)
             {
                 productInfo = await _productInfo.GetAsync(id);
             }
-
             return View(productInfo);
         }
 

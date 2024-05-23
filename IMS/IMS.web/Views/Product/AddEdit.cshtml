@@ -79,14 +79,14 @@ else
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label class="check-box">
-                            <input type="checkbox" asp-for="IsActive">
-                            <span class="checked1"></span>
-                            <p class="terms" for="">Is Active</p>
+                        <input class="form-check-input" type="checkbox" asp-for="IsActive">
+                        <label class="form-check-label" asp-for="IsActive">
+
                         </label>
                         <span asp-validation-for="IsActive" class="text-danger"></span>
                     </div>
                 </div>
+               
             </div>
         </div>
         <div class="col-2">
