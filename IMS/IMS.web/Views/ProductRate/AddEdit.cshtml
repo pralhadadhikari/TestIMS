@@ -69,7 +69,7 @@ else
         <div class="col-4">
             <div class="form-group">
                 <label class="form-label" asp-for="UnitId"></label>
-                <select asp-for="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))">
+                <select asp-for="UnitId" id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
                     <option value="null" selected disabled>-Choose-</option>
                 </select>
 
@@ -181,8 +181,7 @@ else
 
     <script>
 
-        $
-
+        
         $('#CategoryInfoId').change(function () {
 
             ChangeProduct();
@@ -210,6 +209,33 @@ else
 
             }).fail(function () {
                 
+            });
+
+
+        }
+
+
+        $('#ProductInfoId').change(function () {
+
+            ChangeUnit();
+        });
+
+        function ChangeUnit() {
+
+            var productId = $('#ProductInfoId').val();
+
+            $.ajax({
+                url: '/api/ProductRate/getUnit',
+                data: { ProductId: productId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+
+                $('#UnitId').val(data.product.unitInfoId);
+               
+            }).fail(function () {
+
             });
 
 
