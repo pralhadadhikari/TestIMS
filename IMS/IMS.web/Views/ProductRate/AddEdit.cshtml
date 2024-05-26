@@ -69,12 +69,13 @@ else
         <div class="col-4">
             <div class="form-group">
                 <label class="form-label" asp-for="UnitId"></label>
-                <select asp-for="UnitId" id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
+                <select id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
                     <option value="null" selected disabled>-Choose-</option>
                 </select>
 
                 <span class="text-danger" asp-validation-for="UnitId"></span>
             </div>
+            
         </div>
         <div class="col-4">
             <div class="form-group">
@@ -110,12 +111,12 @@ else
         </div>
         <div class="col-4">
             <div class="form-group">
-                <label class="form-label" asp-for="SupplierInfo"></label>
-                <select asp-for="SupplierInfo" class="form-control" asp-items="@(new SelectList(ViewBag.SupplierInfos,"Id","SupplierName"))">
+                <label class="form-label" asp-for="SupplierInfoId"></label>
+                <select asp-for="SupplierInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.SupplierInfos,"Id","SupplierName"))">
                     <option value="null" selected disabled>-Choose-</option>
                 </select>
 
-                <span class="text-danger" asp-validation-for="SupplierInfo"></span>
+                <span class="text-danger" asp-validation-for="SupplierInfoId"></span>
             </div>
         </div>
        
@@ -233,6 +234,7 @@ else
                 console.log(data);
 
                 $('#UnitId').val(data.product.unitInfoId);
+                $('#UnitIdd').val(data.product.unitInfoId);
                
             }).fail(function () {
 

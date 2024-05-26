@@ -90,20 +90,21 @@ namespace IMS.web.Controllers
                     var userId = _userManager.GetUserId(HttpContext.User);
                     var user = await _userManager.FindByIdAsync(userId);
 
-
+                    var product = await _productInfo.GetAsync(productRateInfo.ProductInfoId);
 
                     if (productRateInfo.Id == 0)
                     {
                         productRateInfo.CreatedDate = DateTime.Now;
                         productRateInfo.CreatedBy = userId;
                         productRateInfo.StoreInfoId = user.StoreId;
+                        productRateInfo.RemainingQuantity = productRateInfo.Quantity;
                         var rateInfoId = await _productRateInfo.InsertAsync(productRateInfo);
 
                         TransactionInfo transactionInfo = new TransactionInfo();
                         transactionInfo.TransactionType = "Purchase";
                         transactionInfo.CategoryInfoId = productRateInfo.CategoryInfoId;
                         transactionInfo.ProductInfoId = productRateInfo.ProductInfoId;
-                        transactionInfo.UnitInfoId = productRateInfo.UnitId;
+                        transactionInfo.UnitInfoId = product.UnitInfoId;
                         transactionInfo.ProductRateInfoId = rateInfoId;
                         transactionInfo.Rate = productRateInfo.CostPrice;
                         transactionInfo.Quantity = productRateInfo.Quantity;
@@ -132,7 +133,7 @@ namespace IMS.web.Controllers
                         }
                         else
                         {
-                            var qty= stockdet.Quantity+ productRateInfo.Quantity;
+                            var qty = stockdet.Quantity + productRateInfo.Quantity;
                             stockdet.Quantity = qty;
                             stockdet.ModifiedBy = userId;
                             stockdet.ModifiedDate = DateTime.Now;
@@ -144,11 +145,19 @@ namespace IMS.web.Controllers
                     else
                     {
                         var OrgproductRateInfo = await _productRateInfo.GetAsync(productRateInfo.Id);
+
+                        var productId = OrgproductRateInfo.ProductInfoId;
+                        var orgqty = OrgproductRateInfo.Quantity;
+                        var changeqty = OrgproductRateInfo.Quantity - productRateInfo.Quantity;
+
                         OrgproductRateInfo.CategoryInfoId = productRateInfo.CategoryInfoId;
                         OrgproductRateInfo.ProductInfoId = productRateInfo.ProductInfoId;
                         OrgproductRateInfo.CostPrice = productRateInfo.CostPrice;
                         OrgproductRateInfo.SellingPrice = productRateInfo.SellingPrice;
+                        var qqty = OrgproductRateInfo.RemainingQuantity - OrgproductRateInfo.Quantity+ productRateInfo.Quantity;
                         OrgproductRateInfo.Quantity = productRateInfo.Quantity;
+                        OrgproductRateInfo.RemainingQuantity = qqty;
+
                         OrgproductRateInfo.BatchNo = productRateInfo.BatchNo;
                         OrgproductRateInfo.PurchasedDate = productRateInfo.PurchasedDate;
                         OrgproductRateInfo.Expirydate = productRateInfo.Expirydate;
@@ -163,7 +172,7 @@ namespace IMS.web.Controllers
                         transactionInfo.TransactionType = "Purchase";
                         transactionInfo.CategoryInfoId = productRateInfo.CategoryInfoId;
                         transactionInfo.ProductInfoId = productRateInfo.ProductInfoId;
-                        transactionInfo.UnitInfoId = productRateInfo.UnitId;
+                        transactionInfo.UnitInfoId = product.UnitInfoId;
                         transactionInfo.ProductRateInfoId = OrgproductRateInfo.Id;
                         transactionInfo.Rate = productRateInfo.CostPrice;
                         transactionInfo.Quantity = productRateInfo.Quantity;
@@ -178,35 +187,57 @@ namespace IMS.web.Controllers
                         await _transactionInfo.InsertAsync(transactionInfo);
 
 
-
-
-
-
-                        var stockdet = await _stockInfo.GetAsync(p => p.ProductInfoId == productRateInfo.ProductInfoId);
-                        if (stockdet == null)
+                        if (productId == productRateInfo.ProductInfoId)
                         {
-                            StockInfo stockInfo = new StockInfo();
-                            stockInfo.CategoryInfoId = productRateInfo.CategoryInfoId;
-                            stockInfo.ProductInfoId = productRateInfo.ProductInfoId;
-                            stockInfo.ProductRateInfoId = OrgproductRateInfo.Id;
-                            stockInfo.Quantity = productRateInfo.Quantity;
-                            stockInfo.IsActive = true;
-                            stockInfo.CreatedDate = DateTime.Now;
-                            stockInfo.CreatedBy = userId;
-                            stockInfo.StoreInfoId = user.StoreId;
-                            await _stockInfo.InsertAsync(stockInfo);
+                            if (changeqty != 0)
+                            {
+                                var stockdet = await _stockInfo.GetAsync(p => p.ProductInfoId == productRateInfo.ProductInfoId);
+
+
+                                var qty = stockdet.Quantity + changeqty;
+                                stockdet.Quantity = qty;
+
+                                stockdet.ModifiedBy = userId;
+                                stockdet.ModifiedDate = DateTime.Now;
+                                await _stockInfo.UpdateAsync(stockdet);
+                            }
                         }
                         else
                         {
-                            var qty = stockdet.Quantity + productRateInfo.Quantity;
-                            stockdet.Quantity = qty;
-                            stockdet.ModifiedBy = userId;
-                            stockdet.ModifiedDate = DateTime.Now;
-                            await _stockInfo.UpdateAsync(stockdet);
+                            var oldstockdet = await _stockInfo.GetAsync(p => p.ProductInfoId == productId);
+
+                            var qty = oldstockdet.Quantity - orgqty;
+                            oldstockdet.Quantity = qty;
+
+                            oldstockdet.ModifiedBy = userId;
+                            oldstockdet.ModifiedDate = DateTime.Now;
+                            await _stockInfo.UpdateAsync(oldstockdet);
+
+
+                            var stockdet = await _stockInfo.GetAsync(p => p.ProductInfoId == productRateInfo.ProductInfoId);
+                            if (stockdet == null)
+                            {
+                                StockInfo stockInfo = new StockInfo();
+                                stockInfo.CategoryInfoId = productRateInfo.CategoryInfoId;
+                                stockInfo.ProductInfoId = productRateInfo.ProductInfoId;
+                                stockInfo.ProductRateInfoId = OrgproductRateInfo.Id;
+                                stockInfo.Quantity = productRateInfo.Quantity;
+                                stockInfo.IsActive = true;
+                                stockInfo.CreatedDate = DateTime.Now;
+                                stockInfo.CreatedBy = userId;
+                                stockInfo.StoreInfoId = user.StoreId;
+                                await _stockInfo.InsertAsync(stockInfo);
+                            }
+                            else
+                            {
+                                var qtyy = stockdet.Quantity + productRateInfo.Quantity;
+                                stockdet.Quantity = qtyy;
+                                stockdet.ModifiedBy = userId;
+                                stockdet.ModifiedDate = DateTime.Now;
+                                await _stockInfo.UpdateAsync(stockdet);
+                            }
+
                         }
-
-
-
 
 
                         TempData["success"] = "Data Updated Sucessfully";
