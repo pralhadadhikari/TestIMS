@@ -3,7 +3,6 @@
 
 <style>
     .leftside {
-        
     }
 </style>
 
@@ -12,48 +11,43 @@
 </div>
 
 <div class="row" style="border:2px solid blue;padding:10px;">
+    <input id="availablequantity" hidden />
     <div class="col-2">
         <div class="form-group">
             <label class="form-label">Category </label>
             <select id="CategoryInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
                 <option value="null" selected disabled>-Choose-</option>
             </select>
-
-            <span class="text-danger"></span>
+            <span id="validcategory" class="text-danger"></span>
         </div>
     </div>
+
     <div class="col-2">
         <div class="form-group">
             <label class="form-label">Product</label>
             <select id="ProductInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
                 <option value="null" selected disabled>-Choose-</option>
             </select>
-
-            <span class="text-danger"></span>
+            <span id="validproduct" class="text-danger"></span>
         </div>
     </div>
+
     <div class="col-2">
         <div class="form-group">
             <label class="form-label">Batch No</label>
             <select id="BatchNo" class="form-control">
                 <option value="null" selected disabled>-Choose-</option>
+                <!-- Other batch options -->
             </select>
-
-            <span class="text-danger"></span>
+            <span id="validbatch" class="text-danger"></span>
         </div>
     </div>
-    <div class="col-2">
+
+    <div class="col-1">
         <div class="form-group">
             <label class="form-label">Price</label>
             <input class="form-control" id="Price" />
-            <span class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col-2">
-        <div class="form-group">
-            <label class="form-label">Qunatity</label>
-            <input class="form-control" id="Qunatity" />
-            <span class="text-danger"></span>
+            <span id="validprice" class="text-danger"></span>
         </div>
     </div>
     <div class="col-1">
@@ -62,41 +56,63 @@
             <select id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
                 <option value="null" selected disabled>-</option>
             </select>
-            <span class="text-danger"></span>
+            <span id="validunit" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Qty <a id="avlqty" style="font-size:16px;color:red"> </a>  </label>
+            <input class="form-control" id="Quantity" onchange="changeamt()" />
+            <span id="validquantity" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-1">
+        <div class="form-group">
+            <label class="form-label">Amount</label>
+            <input class="form-control" id="amt" />
+            <span id="validamount" class="text-danger"></span>
         </div>
     </div>
     <div class="col-1">
-       <a class="btn btn-primary px-4" style="margin-top:30px" id="addbtn">Add</a>
-        
+        <a class="btn btn-primary px-4" style="margin-top:30px" id="addbtn">Add</a>
+
     </div>
 </div>
 <br />
 <div class="row" style="border:1px solid red">
-   
-    <div class="col-8" style="border:1px solid red" >
+
+    <div class="col-8" style="border:1px solid red">
 
         <div class="row">
             <p style="font-size:18px;text-align:center">Purchase List </p>
-            <div class="row col-12" id="purchaselist"></div>
+            <div class="row col-12">
+
+                <table class="table table-bordered" id="listtable" width="100%"></table>
+
+            </div>
+
+
+
         </div>
     </div>
     <div class="col-4" style="border:1px solid red">
         <p style="font-size:18px;text-align:center">Summary </p>
 
         <div class="row">
-          
-                <div class="col-6">
-                    <label class="col-form-label">Total Item Count :</label>
-                </div>
-                <div class="col-6">
-                    <input id="totalCount" class="form-control">
-                </div>
-           
+
+            <div class="col-6">
+                <label class="col-form-label">Total Item Count :</label>
+            </div>
+            <div class="col-6">
+                <input id="totalCount" class="form-control">
+            </div>
+
         </div>
         <div class="row">
 
             <div class="col-6">
-                <label class="col-form-label">Total Qunatity :</label>
+                <label class="col-form-label">Total Quantity :</label>
             </div>
             <div class="col-6">
                 <input id="totalQuantity" class="form-control">
@@ -143,7 +159,7 @@
 
                 <span class="text-danger"></span>
             </div>
-            
+
 
         </div>
         <div class="row">
@@ -153,12 +169,77 @@
             <div class="col-6">
                 <a class="btn btn-primary px-4 float-end" style="margin-top:30px">Submit</a>
             </div>
-            
+
         </div>
         <br />
     </div>
 </div>
 
+
+<div id="customermodal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customerform">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" asp-for="CustomerInfo.CustomerName"></label>
+                                <input id="CustomerName" class="form-control" asp-for="CustomerInfo.CustomerName" />
+                                <span class="text-danger" asp-validation-for="CustomerInfo.CustomerName"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" asp-for="CustomerInfo.PanNo"></label>
+                                <input id="PanNo" class="form-control" asp-for="CustomerInfo.PanNo" />
+                                <span asp-validation-for="CustomerInfo.PanNo"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" asp-for="CustomerInfo.PhoneNumber"></label>
+                                <input id="PhoneNumber" class="form-control" asp-for="CustomerInfo.PhoneNumber" />
+                                <span class="text-danger" asp-validation-for="CustomerInfo.PhoneNumber"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" asp-for="CustomerInfo.Email"></label>
+                                <input id="Email" class="form-control" asp-for="CustomerInfo.Email" />
+                                <span asp-validation-for="CustomerInfo.Email"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" asp-for="CustomerInfo.Address"></label>
+                                <input id="Address" class="form-control" asp-for="CustomerInfo.Address" />
+                                <span class="text-danger" asp-validation-for="CustomerInfo.Address"></span>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="savebtn" class="btn btn-primary">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -166,6 +247,26 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
+
+        function changeamt() {
+            var qty = $('#Quantity').val();
+            var avlqty = $('#availablequantity').val();
+            var dif = avlqty - qty;
+            var rate = $('#Price').val();
+            if (dif < 0) {
+                alert("Quantity not available");
+                $('#Quantity').val('');
+                return true;
+            }
+            else {
+                var totamt = qty * rate;
+                $('#amt').val(totamt);
+            }
+
+
+        }
+
+
         $('#CategoryInfoId').change(function () {
 
             ChangeProduct();
@@ -218,7 +319,7 @@
 
                 console.log(data);
 
-                $('#UnitId').val(data.product.unitInfoId);               
+                $('#UnitId').val(data.product.unitInfoId);
 
             }).fail(function () {
 
@@ -250,6 +351,7 @@
                 $('#BatchNo').empty();
                 $('#BatchNo').append(optionDistVal);
 
+
             }).fail(function () {
 
             });
@@ -257,6 +359,45 @@
 
         }
 
+
+        function addCustomer() {
+            $('#customermodal').modal('show');
+        }
+
+
+        $('#savebtn').click(function () {
+            var validForm,
+                customerform = $('#customerform');
+            var obj = {
+                CustomerName: $('#CustomerName').val(),
+                Email: $('#Email').val(),
+                PhoneNumber: $('#PhoneNumber').val(),
+                Address: $('#Address').val(),
+                PanNo: $('#PanNo').val()
+            };
+
+            validForm = fValidation(customerform);
+            if (validForm.form()) {
+
+
+                $.ajax({
+                    url: '/api/Customer/addCustomer',
+                    data: { model: obj },
+                    method: 'POST',
+                }).done(function (data) {
+                    $('#customermodal').modal('hide');
+
+                    var optioncustomer = '<option value="' + data['id'] + '">' + data['customerName'] + '</option>'
+
+                    $('#custometInfo').append(optioncustomer);
+
+                }).fail(function () {
+
+                });
+
+            }
+
+        });
 
 
         $('#BatchNo').change(function () {
@@ -278,6 +419,10 @@
                 console.log(data);
                 $('#Price').empty();
                 $('#Price').val(data.productDetail.sellingPrice);
+                $('#availablequantity').val(data.productDetail.remainingQuantity);
+
+                var available = '(Avl: ' + data.productDetail.remainingQuantity + ')';
+                $('#avlqty').text(available);
 
             }).fail(function () {
 
@@ -285,6 +430,217 @@
 
 
         }
+
+
+
+        $('#addbtn').click(function () {
+            addtolist();
+        });
+
+
+
+        function validateForm() {
+            // Clear previous error messages
+            $('.text-danger').text('');
+
+            // Get values
+            var category = $('#CategoryInfoId').val();
+            var product = $('#ProductInfoId').val();
+            var batchno = $('#BatchNo').val();
+            var rate = $('#Price').val();
+            var quantity = $('#Quantity').val();
+            var unit = $('#UnitId').val();
+            var amount = $('#amt').val();
+            var isValid = true;
+
+            console.log(category, product, rate, quantity, unit)
+
+            // Validate category
+            if (!category) {
+                $('#validcategory').text('Please Select Category');
+                isValid = false;
+            }
+
+            // Validate product
+            if (!product) {
+                $('#validproduct').text('Please Select Product');
+                isValid = false;
+            }
+            if (!batchno) {
+                $('#validbatch').text('Please Select Batch');
+                isValid = false;
+            }
+
+            // Validate rate
+            if (!rate) {
+                $('#validprice').text('Please Input Price');
+                isValid = false;
+            } else if (isNaN(rate) || rate <= 0) {
+                $('#validprice').text('Please Input Price');
+                isValid = false;
+            }
+
+            // Validate quantity
+            if (!quantity) {
+                $('#validquantity').text('Please Input Quantity');
+                isValid = false;
+            } else if (isNaN(quantity) || quantity <= 0) {
+                $('#validquantity').text('Please Input Quantity');
+                isValid = false;
+            }
+
+            // Validate unit
+            if (!unit) {
+                $('#validunit').text('Please Select Unit');
+                isValid = false;
+            }
+            if (!amount) {
+                $('#validamount').text('Amount is null');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        function addtolist() {
+
+
+            if (validateForm()) {
+
+
+            if (!document.getElementById("dynamictable")) {
+
+               
+                    if ($('#Quantity').val() == 0) {
+                        alert("Please enter valid quantity! ")
+                        return
+                    }
+
+
+                    var tbl = document.createElement("table");
+                    tbl.setAttribute('id', 'dynamictable');
+                    var header = document.createElement('tr')
+
+                    var headingCell1 = document.createElement('th')
+                    var headingText1 = document.createTextNode('Category')
+                    headingCell1.setAttribute('name', 'category')
+                    headingCell1.appendChild(headingText1)
+                    header.appendChild(headingCell1)
+
+
+                    var headingCell2 = document.createElement('th')
+                    var headingText2 = document.createTextNode('Product')
+                    headingCell2.setAttribute('name', 'product')
+                    headingCell2.appendChild(headingText2)
+                    header.appendChild(headingCell2)
+
+                    var headingCell3 = document.createElement('th')
+                    var headingText3 = document.createTextNode('Batch')
+                    headingCell3.setAttribute('name', 'batch')
+                    headingCell3.appendChild(headingText3)
+                    header.appendChild(headingCell3)
+
+                    var headingCell4 = document.createElement('th')
+                    var headingText4 = document.createTextNode('Price')
+                    headingCell4.appendChild(headingText4)
+                    header.appendChild(headingCell4)
+
+
+                    var headingCell5 = document.createElement('th')
+                    var headingText5 = document.createTextNode('Unit')
+                    headingCell5.setAttribute('name', 'unit')
+                    headingCell5.appendChild(headingText5)
+                    header.appendChild(headingCell5)
+
+
+                    var headingCell6 = document.createElement('th')
+                    var headingText6 = document.createTextNode('Quantity')
+                    headingCell6.appendChild(headingText6)
+                    header.appendChild(headingCell6)
+
+                    var headingCell7 = document.createElement('th')
+                    var headingText7 = document.createTextNode('Amount')
+                    headingCell7.appendChild(headingText7)
+                    header.appendChild(headingCell7)
+
+                    var headingCell8 = document.createElement('th')
+                    var headingText8 = document.createTextNode('')
+                    headingCell8.appendChild(headingText8)
+                    header.appendChild(headingCell8)
+
+                    tbl.appendChild(header)
+
+
+                    var body = document.createElement('tbody')
+                    tbl.appendChild(body)
+                    document.getElementById("listtable").append(tbl)
+               
+
+            }
+
+            let myTable = document.getElementById('dynamictable').getElementsByTagName('tbody')[0];
+
+            let row = myTable.insertRow();
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
+            let cell5 = row.insertCell(4);
+            let cell6 = row.insertCell(5);
+            let cell7 = row.insertCell(6);
+            let cell8 = row.insertCell(7);
+
+            cell1.setAttribute('data-name-category', $("#CategoryInfoId option:selected").val())
+            cell1.innerHTML = $("#CategoryInfoId option:selected").text();
+            cell2.setAttribute('data-name-product', $("#ProductInfoId option:selected").val())
+            cell2.innerHTML = $("#ProductInfoId option:selected").text();
+            cell3.setAttribute('data-name-batch', $("#BatchNo option:selected").val())
+            cell3.innerHTML = $("#BatchNo option:selected").text();
+            cell4.innerHTML = $('#Price').val();
+            cell5.setAttribute('data-name-unit', $("#UnitId option:selected").val())
+            cell5.innerHTML = $("#UnitId option:selected").text();
+            cell6.innerHTML = $('#Quantity').val();
+            cell7.innerHTML = $('#amt').val();
+
+            var btn = document.createElement('input');
+            btn.type = "button";
+            btn.className = "btn";
+            btn.className = "btn-primary"
+            btn.name = "Delete"
+            btn.value = "Delete"
+            btn.setAttribute('onclick', 'DeleteRows(this)')
+            cell8.appendChild(btn);
+
+            getsummary();
+            }
+            reset();
+        }
+
+        function DeleteRows(btn) {
+            var row = btn.parentNode.parentNode;
+            console.log(row.rowIndex)
+
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        };
+
+        function reset() {
+            $('#availablequantity').val('');
+            $('#avlqty').text('');
+            $('#CategoryInfoId').val('null');
+            $('#ProductInfoId').val('null'); 
+            $('#BatchNo').val('null');
+            $('#Price').val('');
+            $('#Quantity').val('');
+            $('#UnitId').val('');
+            $('#amt').val('');
+
+        }
+        function getsummary() {
+
+        }
+
 
 
 

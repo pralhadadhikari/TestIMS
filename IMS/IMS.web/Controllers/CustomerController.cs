@@ -81,5 +81,20 @@ namespace IMS.web.Controllers
             TempData["error"] = "Please input Valid Data";
             return RedirectToAction(nameof(AddEdit));
         }
+
+        [HttpPost]
+        [Route("/api/Customer/addCustomer")]
+        public async Task<IActionResult> AddCustomer(CustomerInfo model)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            model.CreatedDate = DateTime.Now;
+            model.CreatedBy = userId;
+            model.StoreInfoId = user.StoreId;
+            var result = await _customerInfo.InsertAsync(model);
+            model.Id = result;
+            return Json (model);
+        }
+
     }
 }
