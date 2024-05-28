@@ -46,11 +46,13 @@ namespace IMS.web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId== user.StoreId);
+            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true);
+            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             var rateRateInfo = await _productRateInfo.GetAllAsync();
 
             return View(rateRateInfo);
@@ -59,12 +61,13 @@ namespace IMS.web.Controllers
         public async Task<IActionResult> AddEdit(int Id)
         {
             ProductRateInfo productRateInfo = new ProductRateInfo();
-
-            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true);
+            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             productRateInfo.PurchasedDate = DateTime.Now;
             productRateInfo.IsActive = true;
 
@@ -78,17 +81,18 @@ namespace IMS.web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEdit(ProductRateInfo productRateInfo)
         {
-            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true);
-            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true);
+            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var userId = _userManager.GetUserId(HttpContext.User);
-                    var user = await _userManager.FindByIdAsync(userId);
+                   
 
                     var product = await _productInfo.GetAsync(productRateInfo.ProductInfoId);
 
@@ -261,7 +265,9 @@ namespace IMS.web.Controllers
         [Route("/api/ProductRate/getproduct")]
         public async Task<IActionResult> GetProduct(int CategoryId)
         {
-            var productList = await _productInfo.GetAllAsync(p => p.CategoryInfoId == CategoryId);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            var productList = await _productInfo.GetAllAsync(p => p.CategoryInfoId == CategoryId && p.StoreInfoId==user.StoreId);
 
             return Json(new { productList });
         }

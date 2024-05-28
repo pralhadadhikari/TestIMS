@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IMS.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12862ff13288082eb3274e96390f3d92c4b3488f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77ccf4c1f61a6205c1f360ecc7e63966aa4c4438")]
 [assembly: System.Reflection.AssemblyProductAttribute("IMS.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IMS.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

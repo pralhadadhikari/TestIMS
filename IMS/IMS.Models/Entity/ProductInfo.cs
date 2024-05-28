@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,14 @@ namespace IMS.Models.Entity
     public class ProductInfo:BaseEntity
     {
         public int CategoryInfoId { get; set; }
+        [Required]
+        [Display(Name = "Product Name")]
         public string ProductName { get;set; }
-        public string ProductDescription { get; set; }        
+        [Required]
+        [Display(Name = "Description")]
+        public string ProductDescription { get; set; }
+        [Required]
+        [Display(Name = "Unit")]
         public int UnitInfoId { get; set; }        
         public int StoreInfoId { get; set; }
         [NotMapped]

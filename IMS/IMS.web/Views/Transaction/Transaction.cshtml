@@ -1,0 +1,293 @@
+﻿@model IMS.Models.ViewModels.TransactionViewModel
+
+
+<style>
+    .leftside {
+        
+    }
+</style>
+
+<div>
+    <p style="font-size:20px;text-align:center">IMS Transaction </p>
+</div>
+
+<div class="row" style="border:2px solid blue;padding:10px;">
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Category </label>
+            <select id="CategoryInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
+                <option value="null" selected disabled>-Choose-</option>
+            </select>
+
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Product</label>
+            <select id="ProductInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
+                <option value="null" selected disabled>-Choose-</option>
+            </select>
+
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Batch No</label>
+            <select id="BatchNo" class="form-control">
+                <option value="null" selected disabled>-Choose-</option>
+            </select>
+
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Price</label>
+            <input class="form-control" id="Price" />
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-group">
+            <label class="form-label">Qunatity</label>
+            <input class="form-control" id="Qunatity" />
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-1">
+        <div class="form-group">
+            <label class="form-label">Unit</label>
+            <select id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
+                <option value="null" selected disabled>-</option>
+            </select>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-1">
+       <a class="btn btn-primary px-4" style="margin-top:30px" id="addbtn">Add</a>
+        
+    </div>
+</div>
+<br />
+<div class="row" style="border:1px solid red">
+   
+    <div class="col-8" style="border:1px solid red" >
+
+        <div class="row">
+            <p style="font-size:18px;text-align:center">Purchase List </p>
+            <div class="row col-12" id="purchaselist"></div>
+        </div>
+    </div>
+    <div class="col-4" style="border:1px solid red">
+        <p style="font-size:18px;text-align:center">Summary </p>
+
+        <div class="row">
+          
+                <div class="col-6">
+                    <label class="col-form-label">Total Item Count :</label>
+                </div>
+                <div class="col-6">
+                    <input id="totalCount" class="form-control">
+                </div>
+           
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                <label class="col-form-label">Total Qunatity :</label>
+            </div>
+            <div class="col-6">
+                <input id="totalQuantity" class="form-control">
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                <label class="col-form-label">Amount :</label>
+            </div>
+            <div class="col-6">
+                <input id="amount" class="form-control">
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                <label class="col-form-label">Discount :</label>
+            </div>
+            <div class="col-6">
+                <input id="discount" class="form-control">
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                <label class="col-form-label">Total Amount :</label>
+            </div>
+            <div class="col-6">
+                <input id="totalAmount" class="form-control">
+            </div>
+
+        </div>
+        <hr />
+        <div class="row">
+            <div class="form-group">
+                <label class="form-label">Select Customer   <a class="btn btn-outline-primary btn-sm" onclick="addCustomer()">Add Customer</a>   </label>
+                <select id="custometInfo" class="form-control" asp-items="@(new SelectList(ViewBag.CustomerInfos,"Id","CustomerName"))">
+                    <option value="null" selected disabled>-Choose-</option>
+                </select>
+
+                <span class="text-danger"></span>
+            </div>
+            
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <a class="btn btn-secondary px-4 " style="margin-top:30px">Back</a>
+            </div>
+            <div class="col-6">
+                <a class="btn btn-primary px-4 float-end" style="margin-top:30px">Submit</a>
+            </div>
+            
+        </div>
+        <br />
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $('#CategoryInfoId').change(function () {
+
+            ChangeProduct();
+        });
+
+        function ChangeProduct() {
+
+            var categoryId = $('#CategoryInfoId').val();
+
+            $.ajax({
+                url: '/api/Transaction/getproduct',
+                data: { CategoryId: categoryId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+
+                optionDistVal = '<option disabled selected> -Choose- </option>'
+                $.each(data['productList'], function (index, value) {
+                    optionDistVal += '<option value="' + value['id'] + '">' + value['productName'] + '</option>'
+                });
+
+                $('#ProductInfoId').empty();
+                $('#ProductInfoId').append(optionDistVal);
+
+            }).fail(function () {
+
+            });
+
+
+        }
+
+
+        $('#ProductInfoId').change(function () {
+            ChangeUnit();
+            ChangeBatch();
+        });
+
+
+
+        function ChangeUnit() {
+
+            var productId = $('#ProductInfoId').val();
+
+            $.ajax({
+                url: '/api/Transaction/getUnit',
+                data: { ProductId: productId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+
+                $('#UnitId').val(data.product.unitInfoId);               
+
+            }).fail(function () {
+
+            });
+
+
+        }
+
+
+
+
+        function ChangeBatch() {
+
+            var productId = $('#ProductInfoId').val();
+
+            $.ajax({
+                url: '/api/Transaction/getBatch',
+                data: { ProductId: productId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+
+                optionDistVal = '<option disabled selected> -Choose- </option>'
+                $.each(data['batchList'], function (index, value) {
+                    optionDistVal += '<option value="' + value['id'] + '">' + value['batchNo'] + '</option>'
+                });
+
+                $('#BatchNo').empty();
+                $('#BatchNo').append(optionDistVal);
+
+            }).fail(function () {
+
+            });
+
+
+        }
+
+
+
+        $('#BatchNo').change(function () {
+            ChangeRate();
+        });
+
+
+
+        function ChangeRate() {
+
+            var productRateId = $('#BatchNo').val();
+
+            $.ajax({
+                url: '/api/Transaction/getProductRate',
+                data: { ProductRateId: productRateId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+                $('#Price').empty();
+                $('#Price').val(data.productDetail.sellingPrice);
+
+            }).fail(function () {
+
+            });
+
+
+        }
+
+
+
+    </script>
+
+}

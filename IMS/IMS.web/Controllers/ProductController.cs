@@ -31,7 +31,7 @@ namespace IMS.web.Controllers
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userId);
-            ViewBag.CategoryInfos=await _categoryInfo.GetAllAsync(p=>p.IsActive==true);
+            ViewBag.CategoryInfos=await _categoryInfo.GetAllAsync(p=>p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
 
             var productInfos = await _productInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId);
@@ -40,8 +40,10 @@ namespace IMS.web.Controllers
 
         public async Task<IActionResult> AddEdit(int id)
         {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
             ProductInfo productInfo = new ProductInfo();
-            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true);
+            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
             productInfo.IsActive = true;
             if (id > 0)
@@ -54,14 +56,15 @@ namespace IMS.web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEdit(ProductInfo productInfo)
         {
-            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var userId = _userManager.GetUserId(HttpContext.User);
-                    var user = await _userManager.FindByIdAsync(userId);
+                  
 
 
                     if (productInfo.ImageFile != null)

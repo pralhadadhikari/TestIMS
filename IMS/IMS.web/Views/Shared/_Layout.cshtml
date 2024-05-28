@@ -24,11 +24,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("ADMIN"))
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="StoreInfo" asp-action="Index">Store</a>
                             </li>
+                        }
+
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("ADMIN"))
+                        {
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
                             </li>
@@ -49,6 +56,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ProductRate" asp-action="Index">Purchase Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Transaction">Transaction</a>
                             </li>
                         }
                     </ul>

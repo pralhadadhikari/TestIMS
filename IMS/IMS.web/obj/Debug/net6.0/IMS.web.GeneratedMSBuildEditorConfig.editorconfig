@@ -274,6 +274,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Transaction/Transaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cVHJhbnNhY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Unit/AddEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVW5pdFxBZGRFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
