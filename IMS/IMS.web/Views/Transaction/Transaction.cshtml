@@ -10,104 +10,121 @@
     <p style="font-size:20px;text-align:center">IMS Transaction </p>
 </div>
 
-<div class="row">
-    <div class="col-3">
+<div class="row" style="padding-left:10px">
+    <div class="col-2" style="border:1px solid #D5D8DC;border-radius:5px">
         <div class="form-group">
-            <label class="form-label">Select Customer   <a class="btn btn-outline-primary btn-sm" onclick="addCustomer()">Add Customer</a>   </label>
+           <label>Select Customer</label>
             <select id="custometInfo" class="form-control" asp-items="@(new SelectList(ViewBag.CustomerInfos,"Id","CustomerName"))">
-                <option value="null" selected disabled>-Choose-</option>
+                <option value="null" selected disabled>Search Customer</option>
             </select>
 
             <span class="text-danger"></span>
         </div>
     </div>
     <div class="col-2">
-        <label class="form-label">Customer Name</label>
-        <input class="form-control" id="name" />
-
-        <span class="text-danger"></span>
+        <div class="form-floating">
+            <input class="form-control" id="name" />
+            <label>Customer Name</label>
+            <span class="text-danger"></span>
+        </div>  
     </div>
     <div class="col-2">
-        <label class="form-label">Pan No</label>
-        <input class="form-control" id="panno" />
-
-        <span class="text-danger"></span>
+        <div class="form-floating">
+            <input class="form-control" id="panno" />
+            <label>Pan No</label>
+            <span class="text-danger"></span>
+        </div>
     </div>
 
     <div class="col-2">
-        <label class="form-label">Phone No</label>
-        <input class="form-control" id="phoneno" />
+        <div class="form-floating">
+            <input class="form-control" id="phoneno" />
+            <label class="form-label">Phone No</label>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-primary btn-sm" onclick="addCustomer()">Add Customer</a>
     </div>
 
 </div>
 <hr />
 
-<div class="row" style="border:2px solid blue;padding:10px;">
+<div class="row">
     <input id="availablequantity" hidden />
     <div class="col-2">
-        <div class="form-group">
-            <label class="form-label">Category </label>
-            <select id="CategoryInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
+      
+
+        <div class="form-floating">
+            <select id="CategoryInfoId" class="form-select" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
                 <option value="null" selected disabled>-Choose-</option>
             </select>
+            <label>Category</label>
             <span id="validcategory" class="text-danger"></span>
         </div>
+
     </div>
 
     <div class="col-2">
-        <div class="form-group">
-            <label class="form-label">Product</label>
-            <select id="ProductInfoId" class="form-control" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
+        <div class="form-floating">
+           
+            <select id="ProductInfoId" class="form-select" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
                 <option value="null" selected disabled>-Choose-</option>
             </select>
+            <label class="form-label">Product</label>
             <span id="validproduct" class="text-danger"></span>
         </div>
     </div>
 
     <div class="col-2">
-        <div class="form-group">
-            <label class="form-label">Batch No</label>
-            <select id="BatchNo" class="form-control">
+        <div class="form-floating">
+           
+            <select id="BatchNo" class="form-select">
                 <option value="null" selected disabled>-Choose-</option>
                 <!-- Other batch options -->
             </select>
+            <label class="form-label">Batch No</label>
             <span id="validbatch" class="text-danger"></span>
         </div>
     </div>
 
     <div class="col-1">
-        <div class="form-group">
-            <label class="form-label">Price</label>
+        <div class="form-floating">
+           
             <input class="form-control" id="Price" />
+            <label class="form-label">Price</label>
             <span id="validprice" class="text-danger"></span>
         </div>
     </div>
     <div class="col-1">
-        <div class="form-group">
-            <label class="form-label">Unit</label>
+        <div class="form-floating">
+           
             <select id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
                 <option value="null" selected disabled>-</option>
             </select>
+            <label class="form-label">Unit</label>
             <span id="validunit" class="text-danger"></span>
         </div>
     </div>
     <div class="col-2">
-        <div class="form-group">
-            <label class="form-label">Qty <a id="avlqty" style="font-size:16px;color:red"> </a>  </label>
+        <div class="form-floating">
+           
             <input class="form-control" id="Quantity" onchange="changeamt()" />
+            <label class="form-label">Qty <a id="avlqty" style="font-size:16px;color:red"> </a>  </label>
             <span id="validquantity" class="text-danger"></span>
         </div>
     </div>
 
     <div class="col-1">
-        <div class="form-group">
-            <label class="form-label">Amount</label>
+        <div class="form-floating">
+          
             <input class="form-control" id="amt" />
+            <label class="form-label">Amount</label>
             <span id="validamount" class="text-danger"></span>
         </div>
     </div>
     <div class="col-1">
-        <a class="btn btn-primary px-4" style="margin-top:30px" id="addbtn">Add</a>
+        <a class="btn btn-primary px-4" style="margin-top:20px" id="addbtn">Add</a>
 
     </div>
 </div>
