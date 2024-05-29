@@ -118,5 +118,13 @@ namespace IMS.web.Controllers
             return Json(new { productDetail});
         }
 
+        [HttpPost]
+        [Route("/api/Transaction/getCustomer")]
+        public async Task<IActionResult> GetCustomer(int custometId)
+        {
+            var customerInfo = await _customerInfo.GetAsync(custometId);
+            return Json(new { customerInfo });
+        }
+
     }
 }

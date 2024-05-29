@@ -10,6 +10,38 @@
     <p style="font-size:20px;text-align:center">IMS Transaction </p>
 </div>
 
+<div class="row">
+    <div class="col-3">
+        <div class="form-group">
+            <label class="form-label">Select Customer   <a class="btn btn-outline-primary btn-sm" onclick="addCustomer()">Add Customer</a>   </label>
+            <select id="custometInfo" class="form-control" asp-items="@(new SelectList(ViewBag.CustomerInfos,"Id","CustomerName"))">
+                <option value="null" selected disabled>-Choose-</option>
+            </select>
+
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
+        <label class="form-label">Customer Name</label>
+        <input class="form-control" id="name" />
+
+        <span class="text-danger"></span>
+    </div>
+    <div class="col-2">
+        <label class="form-label">Pan No</label>
+        <input class="form-control" id="panno" />
+
+        <span class="text-danger"></span>
+    </div>
+
+    <div class="col-2">
+        <label class="form-label">Phone No</label>
+        <input class="form-control" id="phoneno" />
+    </div>
+
+</div>
+<hr />
+
 <div class="row" style="border:2px solid blue;padding:10px;">
     <input id="availablequantity" hidden />
     <div class="col-2">
@@ -88,7 +120,9 @@
             <p style="font-size:18px;text-align:center">Purchase List </p>
             <div class="row col-12">
 
-                <table class="table table-bordered" id="listtable" width="100%"></table>
+                <table class="table table-bordered" id="listtable" width="100%">
+                </table>
+
 
             </div>
 
@@ -135,7 +169,7 @@
                 <label class="col-form-label">Discount :</label>
             </div>
             <div class="col-6">
-                <input id="discount" class="form-control">
+                <input id="discount" onchange="totalamount()" class="form-control">
             </div>
 
         </div>
@@ -149,19 +183,8 @@
             </div>
 
         </div>
-        <hr />
-        <div class="row">
-            <div class="form-group">
-                <label class="form-label">Select Customer   <a class="btn btn-outline-primary btn-sm" onclick="addCustomer()">Add Customer</a>   </label>
-                <select id="custometInfo" class="form-control" asp-items="@(new SelectList(ViewBag.CustomerInfos,"Id","CustomerName"))">
-                    <option value="null" selected disabled>-Choose-</option>
-                </select>
-
-                <span class="text-danger"></span>
-            </div>
 
 
-        </div>
         <div class="row">
             <div class="col-6">
                 <a class="btn btn-secondary px-4 " style="margin-top:30px">Back</a>
@@ -262,7 +285,6 @@
                 var totamt = qty * rate;
                 $('#amt').val(totamt);
             }
-
 
         }
 
@@ -485,7 +507,7 @@
                 $('#validquantity').text('Please Input Quantity');
                 isValid = false;
             } else if (isNaN(quantity) || quantity <= 0) {
-                $('#validquantity').text('Please Input Quantity');
+                $('#validquantity').text('Please Input valid Quantity');
                 isValid = false;
             }
 
@@ -503,20 +525,14 @@
         }
 
 
+
         function addtolist() {
 
 
             if (validateForm()) {
 
 
-            if (!document.getElementById("dynamictable")) {
-
-               
-                    if ($('#Quantity').val() == 0) {
-                        alert("Please enter valid quantity! ")
-                        return
-                    }
-
+                if (!document.getElementById("dynamictable")) {
 
                     var tbl = document.createElement("table");
                     tbl.setAttribute('id', 'dynamictable');
@@ -575,51 +591,95 @@
                     var body = document.createElement('tbody')
                     tbl.appendChild(body)
                     document.getElementById("listtable").append(tbl)
-               
 
-            }
 
-            let myTable = document.getElementById('dynamictable').getElementsByTagName('tbody')[0];
+                }
 
-            let row = myTable.insertRow();
-            let cell1 = row.insertCell(0);
-            let cell2 = row.insertCell(1);
-            let cell3 = row.insertCell(2);
-            let cell4 = row.insertCell(3);
-            let cell5 = row.insertCell(4);
-            let cell6 = row.insertCell(5);
-            let cell7 = row.insertCell(6);
-            let cell8 = row.insertCell(7);
+                let myTable = document.getElementById('dynamictable').getElementsByTagName('tbody')[0];
 
-            cell1.setAttribute('data-name-category', $("#CategoryInfoId option:selected").val())
-            cell1.innerHTML = $("#CategoryInfoId option:selected").text();
-            cell2.setAttribute('data-name-product', $("#ProductInfoId option:selected").val())
-            cell2.innerHTML = $("#ProductInfoId option:selected").text();
-            cell3.setAttribute('data-name-batch', $("#BatchNo option:selected").val())
-            cell3.innerHTML = $("#BatchNo option:selected").text();
-            cell4.innerHTML = $('#Price').val();
-            cell5.setAttribute('data-name-unit', $("#UnitId option:selected").val())
-            cell5.innerHTML = $("#UnitId option:selected").text();
-            cell6.innerHTML = $('#Quantity').val();
-            cell7.innerHTML = $('#amt').val();
+                let row = myTable.insertRow();
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+                let cell3 = row.insertCell(2);
+                let cell4 = row.insertCell(3);
+                let cell5 = row.insertCell(4);
+                let cell6 = row.insertCell(5);
+                let cell7 = row.insertCell(6);
+                let cell8 = row.insertCell(7);
 
-            var btn = document.createElement('input');
-            btn.type = "button";
-            btn.className = "btn";
-            btn.className = "btn-primary"
-            btn.name = "Delete"
-            btn.value = "Delete"
-            btn.setAttribute('onclick', 'DeleteRows(this)')
-            cell8.appendChild(btn);
+                cell1.setAttribute('data-name-category', $("#CategoryInfoId option:selected").val())
+                cell1.innerHTML = $("#CategoryInfoId option:selected").text();
+                cell2.setAttribute('data-name-product', $("#ProductInfoId option:selected").val())
+                cell2.innerHTML = $("#ProductInfoId option:selected").text();
+                cell3.setAttribute('data-name-batch', $("#BatchNo option:selected").val())
+                cell3.innerHTML = $("#BatchNo option:selected").text();
+                cell4.innerHTML = $('#Price').val();
+                cell5.setAttribute('data-name-unit', $("#UnitId option:selected").val())
+                cell5.innerHTML = $("#UnitId option:selected").text();
+                cell6.innerHTML = $('#Quantity').val();
+                cell7.innerHTML = $('#amt').val();
 
-            getsummary();
+                var btn = document.createElement('input');
+                btn.type = "button";
+                btn.className = "btn";
+                btn.className = "btn-primary"
+                btn.name = "Delete"
+                btn.value = "Delete"
+                btn.setAttribute('onclick', 'DeleteRows(this)')
+                cell8.appendChild(btn);
+
+                getsummary();
             }
             reset();
         }
 
+
+        function getsummary() {
+            var precount = ($('#totalCount').val() == '') ? 0 : $('#totalCount').val();
+            var count = parseFloat(precount) + 1;
+            $('#totalCount').val(count);
+
+            var preqty = ($('#totalQuantity').val() == '') ? 0 : $('#totalQuantity').val();
+            var curqty = $('#Quantity').val();
+            var qty = parseFloat(preqty) + parseFloat(curqty);
+            $('#totalQuantity').val(qty);
+
+            var preamt = ($('#amount').val() == '') ? 0 : $('#amount').val();
+            var curamt = $('#amt').val();
+            var amount = parseFloat(preamt) + parseFloat(curamt);
+            $('#amount').val(amount);
+
+            totalamount();
+
+        }
+        function totalamount() {
+            var dis = ($('#discount').val() == '') ? 0 : $('#discount').val();
+            var amt = ($('#amount').val() == '') ? 0 : $('#amount').val();
+            var tot = parseFloat(amt) - parseFloat(dis);
+            $('#totalAmount').val(tot);
+
+        }
+
+
         function DeleteRows(btn) {
             var row = btn.parentNode.parentNode;
             console.log(row.rowIndex)
+
+            var amount = document.getElementById('dynamictable').rows[row.rowIndex].cells[6].innerHTML;
+            var quantity = document.getElementById('dynamictable').rows[row.rowIndex].cells[5].innerHTML;
+
+            var cnt = $('#totalCount').val();
+            var newcnt = parseFloat(cnt) - 1;
+            $('#totalCount').val(newcnt);
+
+            var qty = $('#totalQuantity').val();
+            var totqty = parseFloat(qty) - parseFloat(quantity);
+            $('#totalQuantity').val(totqty);
+
+            var preamt = $('#amount').val();
+            var totamt = parseFloat(preamt) - parseFloat(amount);
+            $('#amount').val(totamt);
+            totalamount();
 
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
@@ -629,21 +689,52 @@
             $('#availablequantity').val('');
             $('#avlqty').text('');
             $('#CategoryInfoId').val('null');
-            $('#ProductInfoId').val('null'); 
+            $('#ProductInfoId').val('null');
             $('#BatchNo').val('null');
             $('#Price').val('');
             $('#Quantity').val('');
             $('#UnitId').val('');
             $('#amt').val('');
-
-        }
-        function getsummary() {
-
         }
 
 
+        $('#custometInfo').change(function () {
+            Changecustomer();
+        });
 
 
+
+        function Changecustomer() {
+
+            var custometId = $('#custometInfo').val();
+
+            $.ajax({
+                url: '/api/Transaction/getCustomer',
+                data: { custometId: custometId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+                $('#name').val('');
+                $('#panno').val('');
+                $('#phoneno').val('');
+                $('#name').val(data.customerInfo.customerName);
+                $('#panno').val(data.customerInfo.panNo);
+                $('#phoneno').val(data.customerInfo.phoneNumber);
+            }).fail(function () {
+
+            });
+
+
+        }
+        $(document).ready(function () {
+            $('#custometInfo').select2({
+                maximumInputLength: 20,
+                placeholder:"Serach Customer"
+               
+            });
+        });
+                
     </script>
 
 }
