@@ -521,3 +521,5 @@ D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\staticwebassets\msbuild.build
 D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.IMS.web.props
 D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\staticwebassets.pack.json
 D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\IMS.web.csproj.Up2Date
+D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\scopedcss\Views\Shared\_LoginLayout.cshtml.rz.scp.css
+D:\dotnetprog\TestIMS\IMS\IMS.web\obj\Debug\net6.0\scopedcss\Views\Shared\_ReportLayout.cshtml.rz.scp.css

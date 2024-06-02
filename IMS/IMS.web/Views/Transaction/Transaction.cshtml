@@ -13,7 +13,7 @@
 <div class="row" style="padding-left:10px">
     <div class="col-2" style="border:1px solid #D5D8DC;border-radius:5px">
         <div class="form-group">
-           <label>Select Customer</label>
+            <label>Select Customer</label>
             <select id="custometInfo" class="form-control" asp-items="@(new SelectList(ViewBag.CustomerInfos,"Id","CustomerName"))">
                 <option value="null" selected disabled>Search Customer</option>
             </select>
@@ -26,7 +26,7 @@
             <input class="form-control" id="name" />
             <label>Customer Name</label>
             <span class="text-danger"></span>
-        </div>  
+        </div>
     </div>
     <div class="col-2">
         <div class="form-floating">
@@ -44,6 +44,19 @@
         </div>
     </div>
     <div class="col-2">
+        <div class="form-floating">
+            <select id="paymentmethod" class="form-select">
+                
+                <option selected value="0" >Cash</option>
+                <option value="1" >Online</option>
+                <option value="2">Cheque</option>
+                <option value="3">Bank Deposit</option>
+            </select>
+            <label>Payment Method</label>
+            <span class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-2">
         <a class="btn btn-outline-primary btn-sm" onclick="addCustomer()">Add Customer</a>
     </div>
 
@@ -53,7 +66,7 @@
 <div class="row">
     <input id="availablequantity" hidden />
     <div class="col-2">
-      
+
 
         <div class="form-floating">
             <select id="CategoryInfoId" class="form-select" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
@@ -67,7 +80,7 @@
 
     <div class="col-2">
         <div class="form-floating">
-           
+
             <select id="ProductInfoId" class="form-select" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
                 <option value="null" selected disabled>-Choose-</option>
             </select>
@@ -78,7 +91,7 @@
 
     <div class="col-2">
         <div class="form-floating">
-           
+
             <select id="BatchNo" class="form-select">
                 <option value="null" selected disabled>-Choose-</option>
                 <!-- Other batch options -->
@@ -90,7 +103,7 @@
 
     <div class="col-1">
         <div class="form-floating">
-           
+
             <input class="form-control" id="Price" />
             <label class="form-label">Price</label>
             <span id="validprice" class="text-danger"></span>
@@ -98,7 +111,7 @@
     </div>
     <div class="col-1">
         <div class="form-floating">
-           
+
             <select id="UnitId" class="form-control" asp-items="@(new SelectList(ViewBag.UnitInfos,"Id","UnitName"))" disabled>
                 <option value="null" selected disabled>-</option>
             </select>
@@ -108,7 +121,7 @@
     </div>
     <div class="col-2">
         <div class="form-floating">
-           
+
             <input class="form-control" id="Quantity" onchange="changeamt()" />
             <label class="form-label">Qty <a id="avlqty" style="font-size:16px;color:red"> </a>  </label>
             <span id="validquantity" class="text-danger"></span>
@@ -117,7 +130,7 @@
 
     <div class="col-1">
         <div class="form-floating">
-          
+
             <input class="form-control" id="amt" />
             <label class="form-label">Amount</label>
             <span id="validamount" class="text-danger"></span>
@@ -200,14 +213,22 @@
             </div>
 
         </div>
+        <div class="row">
+
+
+            <div class="col-12">
+                <textarea placeholder="Remarks" id="remarks" rows="2" class="form-control"></textarea>
+            </div>
+
+        </div>
 
 
         <div class="row">
             <div class="col-6">
-                <a class="btn btn-secondary px-4 " style="margin-top:30px">Back</a>
+                <a class="btn btn-secondary px-4" asp-action="Index" style="margin-top:30px">Back</a>
             </div>
             <div class="col-6">
-                <a class="btn btn-primary px-4 float-end" style="margin-top:30px">Submit</a>
+                <a class="btn btn-primary px-4 float-end" id="saveTransaction" style="margin-top:30px">Submit</a>
             </div>
 
         </div>
@@ -283,9 +304,12 @@
 
 
 
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" asp-append-version="true" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
 
         function changeamt() {
@@ -667,7 +691,6 @@
             $('#amount').val(amount);
 
             totalamount();
-
         }
         function totalamount() {
             var dis = ($('#discount').val() == '') ? 0 : $('#discount').val();
@@ -747,11 +770,78 @@
         $(document).ready(function () {
             $('#custometInfo').select2({
                 maximumInputLength: 20,
-                placeholder:"Serach Customer"
-               
+                placeholder: "Serach Customer"
+
             });
         });
+
+
+        $('#saveTransaction').click(function () {
+
+            SaveTransaction();
+
+        });
+
+
+        function SaveTransaction() {
+
+            var transactionViewModel = '';
+
+            var productInvoiceInfo = {
+                CustomerInfoId: $('#custometInfo').val(),
+                NetAmount: $('#amount').val(),
+                DiscountAmount: $('#discount').val(),
+                TotalAmount: $('#totalAmount').val(),
+                Remarks: $('#remarks').val(),
+                PaymentMethod: $('#paymentmethod').val()
                 
+            };
+
+            var TableData = new Array();            
+            $('#dynamictable tr').each(function (row, tr) {
+
+                TableData[row] = {
+                    "ProductRateInfoId": $(tr).find('td:eq(2)').data('name-batch'),
+                    "Rate": $(tr).find('td:eq(3)').text(),
+                    "Quantity": $(tr).find('td:eq(5)').text(),
+                    "Amount": $(tr).find('td:eq(6)').text()                   
+                }
+            });
+
+            TableData.shift();
+            console.log(TableData)
+
+            transactionViewModel = {
+                ProductInvoiceInfo: productInvoiceInfo,
+                ProductInvoiceDetailInfos: TableData
+            };
+
+            $.ajax({
+                url: '/api/Transaction/saveTransaction',
+                data: { transactionViewModel: transactionViewModel },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data)
+
+                toastr.success('Transaction Completed')
+
+                window.open('/Transaction/PrintReport?Id=' + data);
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
+
+
+            }).fail(function () {
+
+            });
+
+        }
+
+
+
+
     </script>
 
 }

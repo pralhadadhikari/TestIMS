@@ -1,0 +1,216 @@
+﻿@model IMS.Models.ViewModels.TransactionViewModel
+@{
+    Layout = "_ReportLayout";
+}
+<style>
+    .margin{
+        margin-top:-15px;
+    }
+
+    .summary{
+        border: 1px solid #CFD1D5;
+        
+    }
+
+    .summarydown{
+        border: 1px solid #CFD1D5;
+    }
+</style>
+
+<div class="row margin">
+    <p style="font-size:24px;text-align:center"><b>@Model.StoreInfo.StoreName</b></p>
+</div>
+<div class="row margin">
+    <p style="font-size:20px;text-align:center"><b>@Model.StoreInfo.Address</b></p>
+</div>
+<div class="row margin">
+    <p style="font-size:20px;text-align:center"><b>Phone No: @Model.StoreInfo.PhoneNumber</b></p>
+</div>
+
+
+<br />
+<div class="">
+    <p style="font-size:24px;text-align:center"><b>Tax Invoice</b></p>
+</div>
+
+
+
+<div class="row margin">
+    <div class="col-9">
+        <p>Pan No : <b>@Model.StoreInfo.PanNo</b></p>
+    </div>
+   
+</div>
+<div class="row margin">   
+    <div class="col-3">
+        <p>Invoice No :<b>@Model.ProductInvoiceInfo.Id</b></p>
+    </div>
+</div>
+
+<div class="row margin">
+    <div class="col-9">
+        <p>Customer Name : <b>@Model.ProductInvoiceInfo.CustomerInfo.CustomerName</b></p>
+    </div>
+    <div class="col-3 float-end">
+        <p>Date : <b>@DateTime.Now.ToString("yyyy-MM-dd")</b></p>
+
+    </div
+
+</div>
+<div class="row margin">
+    <div class="col-9">
+        <p>Address : <b>@Model.ProductInvoiceInfo.CustomerInfo.Address</b></p>
+    </div>
+    <div class="col-3">
+        <p> Phone No : <b>@Model.ProductInvoiceInfo.CustomerInfo.PhoneNumber</b></p>
+    </div>
+
+</div>
+<div class="row margin">
+    <div class="col-9">
+        <p>Buyer's Pan No : <b>@Model.ProductInvoiceInfo.CustomerInfo.PanNo</b></p>
+    </div>
+    <div class="col-3">
+        
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        S.N.
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Product
+                    </th>                    
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                       Unit
+                    </th>
+                    <th>
+                        Rate
+                    </th>
+                    <td>
+                        Amount(Rs.)
+                    </td>
+                </tr>
+            </thead>
+            @{
+                int count = 1;
+            }
+            <tbody>
+                @foreach(var items in Model.ProductInvoiceDetailInfos)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                       <td>                            
+                            @items.ProductRateInfo.CategoryInfo.CategoryName
+                        </td>
+                        <td>
+                            @items.ProductRateInfo.ProductInfo.ProductName
+                        </td>
+                        <td>
+                            @items.Quantity
+                        </td>
+                         <td>
+                            @items.ProductRateInfo.ProductInfo.UnitInfo.UnitName
+                        </td>
+                         <td>
+                             @items.Rate
+                        </td>
+                         <td>
+                             @items.Amount
+                        </td>
+                        
+                    </tr>
+                    count = count + 1;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" style="margin-Top:-15px;margin-right:0px;margin-left:0px;">
+    
+    <div class="col-6 summary">
+
+        <p>Amount In Words: @ViewBag.AmountInWord</p>
+
+
+    </div>
+
+
+
+    <div class="col-6 summary">
+        <div class="row summarydown">
+            <div class="col-6">
+                <p>Sub Total:</p>
+            </div>
+            <div class="col-6">
+                <p>@Model.ProductInvoiceInfo.NetAmount</p>
+            </div>
+        </div>
+        <div class="row summarydown">
+            <div class="col-6">
+                <p>Discount:</p>
+            </div>
+            <div class="col-6">
+                <p>@Model.ProductInvoiceInfo.DiscountAmount</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p>Grand Total:</p>
+            </div>
+            <div class="col-6">
+                <p>@Model.ProductInvoiceInfo.TotalAmount</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-3"><p style="text-align:center">@ViewBag.TaxCreator</p></div>
+</div>
+<div class="row margin">
+    <div class="col-3"><p style="text-align:center">------------------</p></div>
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-3"><p style="text-align:center">------------------</p></div>
+</div>
+
+<div class="row margin">
+    <div class="col-3"><p style="text-align:center">Received By</p></div>
+    <div class="col-3"></div>
+    <div class="col-3"></div>
+    <div class="col-3"><p style="text-align:center">User</p></div>
+</div>
+
+
+ @* <script>
+     window.onload = function () {
+         window.print();
+     };
+     window.onafterprint=function(){
+         window.close();
+     }
+ </script> *@

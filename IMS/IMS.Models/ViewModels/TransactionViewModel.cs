@@ -14,6 +14,9 @@ namespace IMS.Models.ViewModels
         public ProductInvoiceDetailInfo ProductInvoiceDetailInfo { get; set; }
         public IEnumerable<ProductInvoiceDetailInfo> ProductInvoiceDetailInfos { get; set; }
         public CustomerInfo CustomerInfo { get; set; }
+        public IEnumerable<CustomerInfo> CustomerInfos { get; set; }
+
+        public StoreInfo StoreInfo { get; set; }    
 
         public int PaymentMethod { get; set; }
         public string InvoiceNo { get; set; }

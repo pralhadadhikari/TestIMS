@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IMS.web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/IMS.web.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        .background-image {
+            background-image: url('@Url.Content("~/images/Ims2.jpg")');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-warning">
+    <header>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+
+
+            <div class="row background-image">
+
+                <div class="col-12 col-sm-12 col-md-8 order-sm-2 order-md-1 order-2 d-flex align-items-center justify-content-center" style="height: 80vh">
+                    @*  <div class="row m-0">
+                    <img src="~/images/Ims2.Jpg" style="max-width: 100%; max-height: 100%; margin: auto;">
+                    </div> *@
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-4 order-sm-1 order-md-2 order-1">
+                    <br />
+                    <br />
+                    <header class="login-header">
+                        <div class="app-logo">
+                            <div class="row m-0">
+                                <div class="col font-weight-bold text-sm-center text-primary mt-2">
+                                    <p class="text-primary" style="font-size:25px;"><b style="color:white"> Inventory Management System </b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="login-content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - IMS.web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+
+        function fValidation(form) {
+            return form.validate({
+
+            });
+        }
+
+    </script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

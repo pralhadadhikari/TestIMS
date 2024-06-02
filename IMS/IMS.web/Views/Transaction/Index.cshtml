@@ -1,0 +1,85 @@
+﻿@model IEnumerable<IMS.Models.Entity.ProductInvoiceInfo>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary float-end" asp-action="Transaction">Add Transaction</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        Invoice No
+                    </th>
+                    <th>
+                        Transaction Date
+                    </th>
+                    <th>Customer Name</th>
+                    <th>
+                        Total Amount
+                    </th>
+                    <th>
+                        Bill Status
+                    </th>
+                    <th>
+                        Cancellation Remarks
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var items in Model)
+                {
+                    <tr>
+                        <td>
+                            @items.Id
+                        </td>
+                        <td>
+                            @items.TransactionDate
+                        </td>
+                        <td>
+                            @foreach (var customer in ViewBag.CustomerInfo)
+                            {
+                                if (items.CustomerInfoId == customer.Id)
+                                {
+                                    @customer.CustomerName
+                                }
+                            }
+                           
+                        </td>
+                        <td>
+                            @items.TotalAmount
+                        </td>
+                        <td>
+                            @items.BillStatus
+                        </td>
+                        <td>
+                            @items.CancellationRemarks
+                        </td>
+                        <td>
+
+                            @if (items.BillStatus == 2)
+                            {
+                                <a class="btn btn-primary" asp-action="PrintReport" asp-route-id="@items.Id">Print</a>
+                            }
+                            else
+                            {
+
+                                <a class="btn btn-danger">Cancell</a>
+                                <a class="btn btn-primary" asp-action="PrintReport" asp-route-id="@items.Id">Print</a>
+                            }
+
+                        </td>
+                        
+                    </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
