@@ -51,7 +51,7 @@
     <div class="col-9">
         <p>Customer Name : <b>@Model.ProductInvoiceInfo.CustomerInfo.CustomerName</b></p>
     </div>
-    <div class="col-3 float-end">
+    <div class="col-3" style="text-align:end">
         <p>Date : <b>@DateTime.Now.ToString("yyyy-MM-dd")</b></p>
 
     </div
@@ -61,8 +61,8 @@
     <div class="col-9">
         <p>Address : <b>@Model.ProductInvoiceInfo.CustomerInfo.Address</b></p>
     </div>
-    <div class="col-3">
-        <p> Phone No : <b>@Model.ProductInvoiceInfo.CustomerInfo.PhoneNumber</b></p>
+    <div class="col-3" style="text-align:end">
+        <p style="text-align:end"> Phone No : <b>@Model.ProductInvoiceInfo.CustomerInfo.PhoneNumber</b></p>
     </div>
 
 </div>
@@ -152,7 +152,7 @@
 
 
 
-    <div class="col-6 summary">
+    <div class="col-6 summary" style="margin-right:0px">
         <div class="row summarydown">
             <div class="col-6">
                 <p>Sub Total:</p>
@@ -206,11 +206,11 @@
 </div>
 
 
- @* <script>
+ <script>
      window.onload = function () {
          window.print();
      };
      window.onafterprint=function(){
          window.close();
      }
- </script> *@
+ </script>

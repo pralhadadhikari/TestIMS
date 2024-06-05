@@ -34,6 +34,9 @@ namespace IMS.Infrastructure.Entity_Configuration
             builder.Property(e => e.PanNo)
                 .HasMaxLength(30)
                .IsUnicode(true);
+            builder.Property(e => e.LogoUrl)
+                .HasMaxLength(500)
+                .IsUnicode(true);
             builder.Property(e => e.IsActive)
             .HasDefaultValue(true);
 

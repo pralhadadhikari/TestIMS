@@ -45,13 +45,13 @@
     </div>
     <div class="col-2">
         <div class="form-floating">
-            <select id="paymentmethod" class="form-select">
-                
-                <option selected value="0" >Cash</option>
-                <option value="1" >Online</option>
-                <option value="2">Cheque</option>
-                <option value="3">Bank Deposit</option>
+          
+            <select id="paymentmethod" class="form-select" asp-items="@(Html.GetEnumSelectList<IMS.Models.Enum.PaymentMethodEnum>())">
+
             </select>
+
+
+
             <label>Payment Method</label>
             <span class="text-danger"></span>
         </div>

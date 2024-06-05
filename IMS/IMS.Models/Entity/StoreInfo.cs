@@ -23,6 +23,7 @@ namespace IMS.Models.Entity
         public string RegistrationNo { get; set; }
         [Required]
         public string PanNo { get; set; }
+        public string LogoUrl { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

@@ -5,6 +5,7 @@ using IMS.web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DiaSymReader;
+using System.Reflection.Metadata;
 
 namespace IMS.web.Controllers
 {
@@ -60,9 +61,9 @@ namespace IMS.web.Controllers
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userId);
-            var transactioinfo = await _productInvoiceInfo.GetAllAsync(p=>p.StoreInfoId==user.StoreId);
-            ViewBag.CustomerInfo = await _customerInfo.GetAllAsync(p=>p.StoreInfoId == user.StoreId);
-            
+            var transactioinfo = await _productInvoiceInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId);
+            ViewBag.CustomerInfo = await _customerInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId);
+
             return View(transactioinfo);
         }
 
@@ -192,7 +193,7 @@ namespace IMS.web.Controllers
                         rateinfo.ModifiedDate = DateTime.Now;
                         await _productRateInfo.UpdateAsync(rateinfo);
 
-                        var stockdet = await _stockInfo.GetAsync(p => p.ProductInfoId == rateinfo.ProductInfoId && p.StoreInfoId==user.StoreId);
+                        var stockdet = await _stockInfo.GetAsync(p => p.ProductInfoId == rateinfo.ProductInfoId && p.StoreInfoId == user.StoreId);
                         var qty = stockdet.Quantity - items.Quantity;
                         stockdet.Quantity = qty;
                         stockdet.ModifiedBy = userId;
@@ -212,7 +213,7 @@ namespace IMS.web.Controllers
 
         public async Task<IActionResult> PrintReport(int Id)
         {
-            
+
             ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync();
             ViewBag.ProductRateInfos = await _productRateInfo.GetAllAsync();
             ViewBag.ProductInfos = await _productInfo.GetAllAsync();
@@ -220,7 +221,7 @@ namespace IMS.web.Controllers
             ViewBag.CustomerInfos = await _customerInfo.GetAllAsync();
 
 
-           
+
 
             var invoiceInfo = await _productInvoiceInfo.GetAsync(Id);
             var user = await _userManager.FindByIdAsync(invoiceInfo.CreatedBy);
@@ -231,7 +232,7 @@ namespace IMS.web.Controllers
             ViewBag.AmountInWord = NumberToWordsHelper.ConvertToWords(totalAmount);
 
             transactionViewModel.StoreInfo = await _storeInfo.GetAsync(user.StoreId);
-            transactionViewModel.ProductInvoiceDetailInfos = await _productInvoiceDetailInfo.GetAllAsync(p=>p.ProductInvoiceInfoId==Id);
+            transactionViewModel.ProductInvoiceDetailInfos = await _productInvoiceDetailInfo.GetAllAsync(p => p.ProductInvoiceInfoId == Id);
             return View(transactionViewModel);
         }
 
@@ -312,6 +313,23 @@ namespace IMS.web.Controllers
                 return words.Trim();
             }
         }
+
+
+        [HttpPost]
+        [Route("/api/Transaction/cancellTransaction")]
+        public async Task<IActionResult> CancellTransaction(int invoiceId, string cancellationRemarks)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var productinvoiceinfo = await _productInvoiceInfo.GetAsync(invoiceId);
+            productinvoiceinfo.BillStatus = 2;
+            productinvoiceinfo.CancellationRemarks = cancellationRemarks;
+            productinvoiceinfo.ModifiedBy = userId;
+            productinvoiceinfo.ModifiedDate = DateTime.Now;
+            await _productInvoiceInfo.UpdateAsync(productinvoiceinfo);
+            return Json(1);
+        }
+
+
 
     }
 }

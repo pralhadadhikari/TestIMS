@@ -1,0 +1,118 @@
+﻿@model IMS.Models.ViewModels.ReportViewModel
+@using IMS.Models.Enum
+
+<p style="font-size:20px;">Custom Report</p>
+
+<form asp-action="Search" method="get">
+    <div class="row">
+        <div class="col-2">
+            <div class="form-floating">
+
+                <select asp-for="SearchCriteria.CustomerId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
+                    <option value="null" selected >-Choose-</option>
+                </select>
+                <label class="form-label">Customer Name</label>
+                <span id="validproduct" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="col-2">
+            <div class="form-floating">
+                <input type="date" class="form-control" asp-for="SearchCriteria.StartDate" />
+                <label class="form-label">Start Date</label>
+                <span id="validproduct" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-floating">
+                <input type="date" class="form-control" asp-for="SearchCriteria.EndDate" />
+                <label class="form-label">End Date</label>
+                <span id="validproduct" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-floating">
+
+                <select asp-for="SearchCriteria.PaymentMethod" class="form-select" asp-items="@(Html.GetEnumSelectList<IMS.Models.Enum.PaymentMethodEnum>())">
+                    <option value="null" selected >-Choose-</option>
+                </select>
+                <label>Payment Method</label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+        </div>
+    </div>
+</form>
+<br/>
+@if (Model.CustomReportViewModels!=null)
+{
+    <div class="row" style="overflow-x:auto">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Transaction Id
+                        </th>
+                        <th>
+                            Transaction Date
+                        </th>
+                        <th>
+                            Customer Name
+                        </th>
+                        <th>
+                            Net Amount
+                        </th>
+                        <th>
+                            Discount
+                        </th>
+                        <th>
+                            Total Amount
+                        </th>
+                        <th>
+                            PaymentMethod
+                        </th>
+                        <th>
+                            Remarks
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var items in Model.CustomReportViewModels)
+                    {
+                        <tr>
+                            <td>
+                                @items.TransactionId
+                            </td>
+                            <td>
+                                @items.TransactionDate.ToString("yyyy-MM-dd")
+                            </td>
+                             <td>
+                                @items.CustomerName
+                            </td>
+                             <td>
+                                @items.NetAmount
+                            </td>
+                             <td>
+                                @items.DiscountAmount
+                            </td>
+                            <td>
+                                @items.TotalAmount
+                            </td>
+                            <td>
+                                @Html.Raw((PaymentMethodEnum)items.PaymentMethod)                               
+                            </td>
+                            <td>
+                                @items.Remarks
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

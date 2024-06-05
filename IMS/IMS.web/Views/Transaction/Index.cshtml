@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<IMS.Models.Entity.ProductInvoiceInfo>
+@using IMS.Models.Enum
 
 <div class="row">
     <div class="col-12">
@@ -22,6 +23,9 @@
                         Total Amount
                     </th>
                     <th>
+                       Payment Method
+                    </th>
+                    <th>
                         Bill Status
                     </th>
                     <th>
@@ -40,7 +44,7 @@
                             @items.Id
                         </td>
                         <td>
-                            @items.TransactionDate
+                            @items.TransactionDate.ToString("yyyy-MM-dd")
                         </td>
                         <td>
                             @foreach (var customer in ViewBag.CustomerInfo)
@@ -55,8 +59,11 @@
                         <td>
                             @items.TotalAmount
                         </td>
+                        <td>                           
+                            @Html.Raw((PaymentMethodEnum)items.PaymentMethod)
+                        </td>
                         <td>
-                            @items.BillStatus
+                            @Html.Raw((BillStatusEnum)items.BillStatus)
                         </td>
                         <td>
                             @items.CancellationRemarks
@@ -65,13 +72,12 @@
 
                             @if (items.BillStatus == 2)
                             {
-                                <a class="btn btn-primary" asp-action="PrintReport" asp-route-id="@items.Id">Print</a>
+                               @*  <a class="btn btn-primary" asp-action="PrintReport" asp-route-id="@items.Id">Print</a> *@
                             }
                             else
                             {
-
-                                <a class="btn btn-danger">Cancell</a>
-                                <a class="btn btn-primary" asp-action="PrintReport" asp-route-id="@items.Id">Print</a>
+                                <a class="btn btn-danger" onclick="cancell('@items.Id')">Cancell</a>
+                                <a class="btn btn-primary" onclick="print('@items.Id')">Print</a>
                             }
 
                         </td>
@@ -83,3 +89,80 @@
         </table>
     </div>
 </div>
+
+
+
+<div id="cancelmodel" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Are you sure want to cancell transaction??</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="itemId" hidden />
+                <div class="form-floating">
+                    <input class="form-control" id="cancelremarks" />
+                    <label class="control-label">Cancellation Remarks*</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="cancellTransaction()">Cancell Transaction</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" asp-append-version="true" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+       function cancell(itemId){
+
+            $('#itemId').val(itemId);
+           $('#cancelmodel').modal('show');
+       }
+
+        function cancellTransaction(){
+            var id = $('#itemId').val();
+            var cancelremarks = $('#cancelremarks').val();
+
+            if (cancelremarks==''){
+                alert("Please Input Cancellation Remarks!!!");
+                return;
+            }
+
+            $.ajax({
+                url: '/api/Transaction/cancellTransaction',
+                data: { invoiceId: id, cancellationRemarks: cancelremarks },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data)
+
+                toastr.success('Transaction Cancelled')
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
+
+
+            }).fail(function () {
+
+            });
+
+
+        }
+
+
+        function print(itemId){
+            
+            window.open('/Transaction/PrintReport?Id=' + itemId);
+        }
+
+    </script>
+
+}
