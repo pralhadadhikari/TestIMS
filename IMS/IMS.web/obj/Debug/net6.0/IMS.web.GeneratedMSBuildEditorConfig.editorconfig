@@ -194,6 +194,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Account/AddUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBZGRVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Account/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Category/AddEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcnlcQWRkRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -248,6 +256,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Report/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Report/PrintReportDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFByaW50UmVwb3J0RGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Report/Stock.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFN0b2NrLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Report/StockReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFN0b2NrUmVwb3J0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/dotnetprog/TestIMS/IMS/IMS.web/Views/Shared/Error.cshtml]

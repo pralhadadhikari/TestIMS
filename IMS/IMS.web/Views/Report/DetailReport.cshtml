@@ -1,14 +1,18 @@
 ﻿@model IMS.Models.ViewModels.ReportViewModel
 @using IMS.Models.Enum
 
-<p style="font-size:20px;">Custom Report</p>
-
+<p style="font-size:20px;">Detail Report</p>
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary float-end" onclick="print()">Print</a>
+    </div>
+</div>
 <form asp-action="SearchDetail" method="get">
     <div class="row">
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.CustomerId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
+                <select asp-for="SearchCriteria.CustomerId" id="customerId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Customer Name</label>
@@ -18,7 +22,7 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.SupplierId" class="form-select" asp-items="@(new SelectList(ViewBag.SupplierInfo,"Id","SupplierName"))">
+                <select asp-for="SearchCriteria.SupplierId" id="supplierId" class="form-select" asp-items="@(new SelectList(ViewBag.SupplierInfo,"Id","SupplierName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Supplier</label>
@@ -28,7 +32,7 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.CategoryId" class="form-select" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
+                <select asp-for="SearchCriteria.CategoryId" id="categoryId" class="form-select" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Category</label>
@@ -38,7 +42,7 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.ProductId" class="form-select" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
+                <select asp-for="SearchCriteria.ProductId" id="productId" class="form-select" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Product</label>
@@ -50,14 +54,14 @@
     <div class="row">
         <div class="col-3">
             <div class="form-floating">
-                <input type="date" class="form-control" asp-for="SearchCriteria.StartDate" />
+                <input type="date" class="form-control" id="StartDate" asp-for="SearchCriteria.StartDate" />
                 <label class="form-label">Start Date</label>
                 <span id="validproduct" class="text-danger"></span>
             </div>
         </div>
         <div class="col-3">
             <div class="form-floating">
-                <input type="date" class="form-control" asp-for="SearchCriteria.EndDate" />
+                <input type="date" class="form-control" id="EndDate" asp-for="SearchCriteria.EndDate" />
                 <label class="form-label">End Date</label>
                 <span id="validproduct" class="text-danger"></span>
             </div>
@@ -65,7 +69,7 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.PaymentMethod" class="form-select" asp-items="@(Html.GetEnumSelectList<IMS.Models.Enum.PaymentMethodEnum>())">
+                <select asp-for="SearchCriteria.PaymentMethod" id="paymentMethod" class="form-select" asp-items="@(Html.GetEnumSelectList<IMS.Models.Enum.PaymentMethodEnum>())">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label>Payment Method</label>
@@ -150,4 +154,51 @@
             </table>
         </div>
     </div>
+}
+
+
+@section Scripts {
+    <script>
+        $('#categoryId').change(function () {
+
+            ChangeProduct();
+        });
+
+        function ChangeProduct() {
+
+            var categoryId = $('#categoryId').val();
+
+            $.ajax({
+                url: '/api/ProductRate/getproduct',
+                data: { CategoryId: categoryId },
+                method: 'POST',
+            }).done(function (data) {
+
+                console.log(data);
+
+                optionDistVal = '<option disabled selected> -Choose- </option>'
+                $.each(data['productList'], function (index, value) {
+                    optionDistVal += '<option value="' + value['id'] + '">' + value['productName'] + '</option>'
+                });
+
+                $('#productId').empty();
+                $('#productId').append(optionDistVal);
+
+            }).fail(function () {
+
+            });
+
+        }
+        function print() {
+            var CustomerId = $('#customerId').val();
+            var SupplierId = $('#supplierId').val();
+            var CategoryId = $('#categoryId').val();
+            var ProductId = $('#productId').val();
+            var StartDate = $('#StartDate').val();
+            var EndDate = $('#EndDate').val();
+            var PaymentMethod = $('#paymentMethod').val();
+
+            window.open('/Report/PrintReportDetail?customerIds=' + CustomerId + '&paymentMethodIds=' + PaymentMethod + '&startDates=' + StartDate + '&endDates=' + EndDate + '&supplierIds=' + SupplierId + '&categoryIds=' + CategoryId + '&productIds=' + ProductId);
+        }
+    </script>
 }

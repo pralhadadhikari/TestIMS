@@ -1,0 +1,87 @@
+﻿@model IMS.Models.ViewModels.ReportViewModel
+@using IMS.Models.Enum
+@{
+    Layout = "_ReportLayout";
+}
+<p style="font-size:20px;">Detail Report</p>
+
+<div class="row" style="overflow-x:auto">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Transaction Id
+                    </th>
+                    <th>
+                        Transaction Date
+                    </th>
+                    <th>
+                        Customer Name
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Product
+                    </th>
+
+                    <th>
+                        Amount
+                    </th>
+
+                    <th>
+                        PaymentMethod
+                    </th>
+                    <th>
+                        Supplier
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var items in Model.ReportDetailViewModels)
+                {
+                    <tr>
+                        <td>
+                            @items.TransactionId
+                        </td>
+                        <td>
+                            @items.TransactionDate.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @items.CustomerName
+                        </td>
+                        <td>
+                            @items.CategoryName
+                        </td>
+                        <td>
+                            @items.ProductName
+                        </td>
+                        <td>
+                            @items.Amount
+                        </td>
+
+                        <td>
+                            @Html.Raw((PaymentMethodEnum)items.PaymentMethod)
+                        </td>
+                        <td>
+                            @items.SupplierName
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    window.onload = function () {
+        window.print();
+    };
+    window.onafterprint = function () {
+        window.close();
+    }
+</script>

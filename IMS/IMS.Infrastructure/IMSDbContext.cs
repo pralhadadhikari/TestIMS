@@ -20,6 +20,7 @@ namespace IMS.Infrastructure
         }
         public DbSet<CustomReportViewModel> CustomReportViewModels { get; set; }       
         public DbSet<ReportDetailViewModel> ReportDetailViewModels { get; set; }
+        public DbSet<UserInfo> UserInfos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new StoreConfiguration());
