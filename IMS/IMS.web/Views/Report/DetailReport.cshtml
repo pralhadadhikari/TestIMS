@@ -3,7 +3,7 @@
 
 <p style="font-size:20px;">Custom Report</p>
 
-<form asp-action="Search" method="get">
+<form asp-action="SearchDetail" method="get">
     <div class="row">
         <div class="col-3">
             <div class="form-floating">
@@ -18,7 +18,7 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.SupplierId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
+                <select asp-for="SearchCriteria.SupplierId" class="form-select" asp-items="@(new SelectList(ViewBag.SupplierInfo,"Id","SupplierName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Supplier</label>
@@ -28,7 +28,7 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.CategoryId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
+                <select asp-for="SearchCriteria.CategoryId" class="form-select" asp-items="@(new SelectList(ViewBag.CategoryInfos,"Id","CategoryName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Category</label>
@@ -38,14 +38,16 @@
         <div class="col-3">
             <div class="form-floating">
 
-                <select asp-for="SearchCriteria.ProductId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
+                <select asp-for="SearchCriteria.ProductId" class="form-select" asp-items="@(new SelectList(ViewBag.ProductInfos,"Id","ProductName"))">
                     <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Product</label>
                 <span id="validproduct" class="text-danger"></span>
             </div>
         </div>
-
+    </div>
+    <br />
+    <div class="row">
         <div class="col-3">
             <div class="form-floating">
                 <input type="date" class="form-control" asp-for="SearchCriteria.StartDate" />
@@ -76,7 +78,7 @@
     </div>
 </form>
 <br />
-@if (Model.CustomReportViewModels != null)
+@if (Model.ReportDetailViewModels != null)
 {
     <div class="row" style="overflow-x:auto">
         <div class="col-12">
@@ -93,25 +95,27 @@
                             Customer Name
                         </th>
                         <th>
-                            Net Amount
+                            Category
                         </th>
                         <th>
-                            Discount
+                            Product
                         </th>
+                        
                         <th>
-                            Total Amount
+                            Amount
                         </th>
+                        
                         <th>
                             PaymentMethod
                         </th>
                         <th>
-                            Remarks
+                            Supplier
                         </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach (var items in Model.CustomReportViewModels)
+                    @foreach (var items in Model.ReportDetailViewModels)
                     {
                         <tr>
                             <td>
@@ -124,19 +128,20 @@
                                 @items.CustomerName
                             </td>
                             <td>
-                                @items.NetAmount
+                                @items.CategoryName
                             </td>
                             <td>
-                                @items.DiscountAmount
+                                @items.ProductName
                             </td>
                             <td>
-                                @items.TotalAmount
+                                @items.Amount
                             </td>
+                            
                             <td>
                                 @Html.Raw((PaymentMethodEnum)items.PaymentMethod)
                             </td>
                             <td>
-                                @items.Remarks
+                                @items.SupplierName
                             </td>
 
                         </tr>

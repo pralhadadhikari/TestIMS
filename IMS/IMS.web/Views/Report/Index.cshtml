@@ -9,13 +9,13 @@
             <div class="form-floating">
 
                 <select asp-for="SearchCriteria.CustomerId" class="form-select" asp-items="@(new SelectList(ViewBag.CustomerInfo,"Id","CustomerName"))">
-                    <option value="null" selected >-Choose-</option>
+                    <option value="null" selected>-Choose-</option>
                 </select>
                 <label class="form-label">Customer Name</label>
                 <span id="validproduct" class="text-danger"></span>
             </div>
         </div>
-        
+
         <div class="col-2">
             <div class="form-floating">
                 <input type="date" class="form-control" asp-for="SearchCriteria.StartDate" />
@@ -34,7 +34,7 @@
             <div class="form-floating">
 
                 <select asp-for="SearchCriteria.PaymentMethod" class="form-select" asp-items="@(Html.GetEnumSelectList<IMS.Models.Enum.PaymentMethodEnum>())">
-                    <option value="null" selected >-Choose-</option>
+                    <option value="null" selected>-Choose-</option>
                 </select>
                 <label>Payment Method</label>
                 <span class="text-danger"></span>
@@ -45,8 +45,8 @@
         </div>
     </div>
 </form>
-<br/>
-@if (Model.CustomReportViewModels!=null)
+<br />
+@if (Model.CustomReportViewModels != null)
 {
     <div class="row" style="overflow-x:auto">
         <div class="col-12">
@@ -81,7 +81,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach(var items in Model.CustomReportViewModels)
+                    @foreach (var items in Model.CustomReportViewModels)
                     {
                         <tr>
                             <td>
@@ -90,20 +90,20 @@
                             <td>
                                 @items.TransactionDate.ToString("yyyy-MM-dd")
                             </td>
-                             <td>
+                            <td>
                                 @items.CustomerName
                             </td>
-                             <td>
+                            <td>
                                 @items.NetAmount
                             </td>
-                             <td>
+                            <td>
                                 @items.DiscountAmount
                             </td>
                             <td>
                                 @items.TotalAmount
                             </td>
                             <td>
-                                @Html.Raw((PaymentMethodEnum)items.PaymentMethod)                               
+                                @Html.Raw((PaymentMethodEnum)items.PaymentMethod)
                             </td>
                             <td>
                                 @items.Remarks
@@ -112,6 +112,23 @@
                         </tr>
                     }
                 </tbody>
+                @{
+                    double totalamt = 0;
+                    double discount = 0;
+                    double amount = 0;
+                    totalamt = Model.CustomReportViewModels.Sum(item => item.TotalAmount);
+                    discount = Model.CustomReportViewModels.Sum(item => item.DiscountAmount);
+                    amount = Model.CustomReportViewModels.Sum(item => item.NetAmount);
+                }
+                <tfoot>
+                    <th>
+                        <td colspan="2">Total</td>
+                        <td>@amount</td>
+                        <td>@discount</td>
+                        <td>@totalamt</td>
+                        <td colspan="2"></td>
+                    </th>
+                </tfoot>
             </table>
         </div>
     </div>

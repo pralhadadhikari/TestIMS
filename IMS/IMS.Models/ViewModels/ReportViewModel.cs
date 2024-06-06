@@ -10,5 +10,6 @@ namespace IMS.Models.ViewModels
     {
         public SearchCriteria SearchCriteria { get; set; }
         public IEnumerable<CustomReportViewModel> CustomReportViewModels { get; set;}
+        public IEnumerable<ReportDetailViewModel> ReportDetailViewModels { get; set; }
     }
 }
