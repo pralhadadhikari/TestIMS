@@ -1,8 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using IMS.web.Areas.Identity.Pages.Account
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_LoginLayout";
+}
+<div class="row">
+
+    <div class="col-1">
+    </div>
+    <div class="col-10">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Login</h5>
+                <form id="account" method="post" asp-area="Identity" asp-page="/Account/Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                        <label asp-for="Input.Email" class="form-label"></label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                        <label asp-for="Input.Password" class="form-label"></label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        <label asp-for="Input.RememberMe" class="form-check-label">
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                    <div>
+                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-">
+    </div>
+
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
