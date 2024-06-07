@@ -1,5 +1,95 @@
-﻿<div class="row">
+﻿@model IEnumerable<IMS.Models.ViewModels.UserInfo>
+<h2>User Management</h2>
+<div class="row">
     <div class="col-12">
         <a class="btn btn-primary float-end" asp-action="AddUser">Add User</a>
     </div>
 </div>
+<h3 class="align-content-center">User List</h3>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>S.N.</th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Full Name
+                    </th>
+                    <th>
+                        Store
+                    </th>
+                    <th>
+                        Role
+                    </th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 1;
+                }
+                @foreach(var items in Model)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @items.Email
+                        </td>
+                        <td>
+                            @items.FullName
+                        </td>
+                        <td>
+                            @items.StoreName
+                        </td>
+                        <td>
+                            @items.RoleName
+                        </td>
+                        <td>
+                            @if (items.IsActive == true)
+                            {
+                                @:Active
+                            }
+                            else
+                            {
+                                @:Deactive
+                            }
+                           
+                        </td>
+                        <td>
+                            @if (items.IsActive == true)
+                            {
+                                <a class="btn btn-danger" onclick="active('@items.Id')">Deactive</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sucess" onclick="active('@items.Id')">Active</a>
+                            }
+
+
+                            <a class="btn btn-primary" onclick="reset('@items.Id')">Reset</a>
+                        </td>
+                    </tr>
+                    count = count + 1;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-3"></div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function active(itemid) {
+            alert(itemid);
+        }
+    </script>
+}

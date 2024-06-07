@@ -21,6 +21,8 @@ namespace IMS.Infrastructure
         public DbSet<CustomReportViewModel> CustomReportViewModels { get; set; }       
         public DbSet<ReportDetailViewModel> ReportDetailViewModels { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
+        public DbSet<DashboardList> DashboardLists { get; set; }
+        public DbSet<DashboardIndex> DashboardIndices { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new StoreConfiguration());
@@ -37,6 +39,8 @@ namespace IMS.Infrastructure
             builder.ApplyConfiguration(new ProductInvoiceDetailInfoConfiguration());
             builder.Entity<CustomReportViewModel>().HasNoKey();
             builder.Entity<ReportDetailViewModel>().HasNoKey();
+            builder.Entity<DashboardList>().HasNoKey();
+            builder.Entity<DashboardIndex>().HasNoKey();
         }
 
 

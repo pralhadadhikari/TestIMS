@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using IMS.web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,12 +15,12 @@ namespace IMS.web.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,18 +59,30 @@ namespace IMS.web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Required]
+            public string FirstName { get; set; }
+            public string MiddleName { get; set; }
+            public string LastName { get; set; }            
+            public string Address { get; set; }
+            public string ProfileUrl { get; set; }
+            public IFormFile ProfileData { get; set; } 
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
+            
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName =user.FirstName,
+                MiddleName =user.MiddleName,
+                LastName=user.LastName,
+                Address = user.Address,
+                ProfileUrl = user.ProfileUrl
             };
         }
 
@@ -98,6 +111,35 @@ namespace IMS.web.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            if (Input.ProfileData != null)
+            {
+                string fileDirectory = $"wwwroot/ProfileImage";
+
+                if (!Directory.Exists(fileDirectory))
+                {
+                    Directory.CreateDirectory(fileDirectory);
+                }
+                string uniqueFileName = Guid.NewGuid() + "_" + Input.ProfileData.FileName;
+                string filePath = Path.Combine(Path.GetFullPath($"wwwroot/ProfileImage"), uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Input.ProfileData.CopyToAsync(fileStream);
+                    Input.ProfileUrl = $"ProfileImage/" + uniqueFileName;
+
+                }
+
+            }
+
+
+            user.FirstName = Input.FirstName;
+            user.MiddleName = Input.MiddleName;
+            user.LastName = Input.LastName;
+            user.Address = Input.Address;
+            user.ProfileUrl = Input.ProfileUrl;
+            user.ModifiedDate = DateTime.Now;
+            var result = await _userManager.UpdateAsync(user);
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

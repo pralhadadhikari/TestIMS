@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GbJi34PMYAdYxrDm/2e6w7Ly4p079oC9FfvI2rT4OPA=",
+  "Hash": "NfGbvfoTYlsga+WGg1a3mEUJWOt2LOSWTOMCveEspQE=",
   "Source": "IMS.web",
   "BasePath": "_content/IMS.web",
   "Mode": "Default",
@@ -2675,6 +2675,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ProductImage\\f3328dd9-cb5a-43ce-9335-707a4501715e_fish.png"
+    },
+    {
+      "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\ProfileImage\\f7819ff3-fc43-4761-9267-8ee27764ba0b_delivery.png",
+      "SourceId": "IMS.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\",
+      "BasePath": "_content/IMS.web",
+      "RelativePath": "ProfileImage/f7819ff3-fc43-4761-9267-8ee27764ba0b_delivery.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ProfileImage\\f7819ff3-fc43-4761-9267-8ee27764ba0b_delivery.png"
     }
   ]
 }

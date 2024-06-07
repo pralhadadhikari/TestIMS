@@ -11,7 +11,7 @@ using IMS.Infrastructure.IRepository;
 using IMS.Models.Entity;
 using IMS.Models.ViewModels;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace IMS.web.Controllers
@@ -54,21 +54,52 @@ namespace IMS.web.Controllers
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userId);
+            var users = await _context.ApplicationUsers.ToListAsync();
+            IEnumerable<UserInfo> userInfos = new List<UserInfo>();
+
+            var roleinfo = await _roleManager.FindByIdAsync(user.UserRoleId);
+
+
+            if (roleinfo.Name == "SUPERADMIN")
+            {
+                var result = _rawSqlRepository.FromSql<UserInfo>(
+                "usp_GetEmployee @storeId",
+                new SqlParameter("@storeId", user.StoreId)
+            ).ToList();
+                userInfos = result;
+            }
+            else
+            {
+                var result = _rawSqlRepository.FromSql<UserInfo>(
+                 "usp_GetEmployee @storeId",
+                 new SqlParameter("@storeId", user.StoreId)
+             ).ToList();
+                userInfos = result;
+            }
+
+
 
             
-            
-
-            return View();
+            return View(userInfos);
         }
 
         public async Task<IActionResult> AddUser()
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userId);
-            RegisterViewModel registerViewModel=new RegisterViewModel();
+            RegisterViewModel registerViewModel = new RegisterViewModel();
             registerViewModel.StoreId = user.StoreId;
             registerViewModel.IsActive = true;
-            ViewBag.StoreInfo = await _storeInfo.GetAllAsync(p=>p.Id==user.StoreId);
+            var roleinfo = await _roleManager.FindByIdAsync(user.UserRoleId);
+            if (roleinfo.Name == "SUPERADMIN")
+            {
+                ViewBag.StoreInfo = await _storeInfo.GetAllAsync();
+            }
+            else
+            {
+                ViewBag.StoreInfo = await _storeInfo.GetAllAsync(p => p.Id == user.StoreId);
+            }
+            
             return View(registerViewModel);
         }
         [HttpPost]
@@ -84,7 +115,7 @@ namespace IMS.web.Controllers
                 user.MiddleName = registerViewModel.MiddleName;
                 user.LastName = registerViewModel.LastName;
                 user.Address = registerViewModel.Address;
-                user.PhoneNumber = registerViewModel.PhoneNumber;                
+                user.PhoneNumber = registerViewModel.PhoneNumber;
                 user.StoreId = registerViewModel.StoreId;
                 user.CreatedBy = users.Id;
                 user.CreatedDate = DateTime.Now;
@@ -117,7 +148,7 @@ namespace IMS.web.Controllers
                     await _emailSender.SendEmailAsync(registerViewModel.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    
+
                 }
                 foreach (var error in result.Errors)
                 {

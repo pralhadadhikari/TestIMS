@@ -1,0 +1,196 @@
+﻿@model IMS.Models.ViewModels.DashboardViewModel
+
+<style>
+    
+     .card-header {
+        font-weight: 400;
+        padding: 5px;
+        font-size: 1rem;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        background-color: #2A7DBE;
+        color: white;
+    }
+
+    .card1 {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-inline-start: 10px solid #2A7DBE;
+        border-color: #2A7DBE;
+        background-color: #C1C8CA;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .t1 {
+        font-size: 35px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: dimgrey;
+        padding-left: 20px;
+    }
+
+    #cardHeader {
+        font-size: 25px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: steelblue;
+        padding-left: 20px;
+    }
+
+    #p {
+        position: absolute;
+        top: auto;
+    }
+
+    .itemss {
+        margin-bottom: 20px;
+    }
+</style>
+
+<h2>Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-3 col-12 col-sm-6 itemss">
+        <div class="card card1">
+
+
+            <div class="col-12" id="cardHeader">Total Transaction</div>
+
+
+            <div class="t1" id="expense">
+               Rs. @(Model.DashboardIndex?.TotalTransaction??0)
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <div class="col-md-3 col-12 col-sm-6 itemss">
+        <div class="card card1">
+
+            <div class="col-12" id="cardHeader">Sucessful Invoice</div>
+
+            <div class="t1" id="expense">
+                @(Model.DashboardIndex?.Sucessful??0)
+            </div>
+
+
+        </div>
+    </div>
+   
+    <div class="col-md-3 col-12 col-sm-6 itemss">
+        <div class="card card1">
+
+            <div class="col-12" id="cardHeader">Canelled Invoice</div>
+            <div class="t1" id="expense">@(Model.DashboardIndex?.Canelled ?? 0)</div>
+
+        </div>
+    </div>
+    <div class="col-md-3 col-12 col-sm-6 itemss">
+        <div class="card card1">
+            <div class="col-12" id="cardHeader">Total Invoices</div>
+            <div class="t1" id="expense">@(Model.DashboardIndex?.Completed  ?? 0)</div>
+
+        </div>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <h4 style="text-align:center">Selling Summary</h4>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                S.N.
+                            </th>
+                            <th>
+                                Item Name
+                            </th>
+                            <th>
+                                Sold Count
+                            </th>
+                            <th>
+                                Total Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int counts = 1;
+                        }
+                        @foreach(var items in Model.DashboardListInfos)
+                        {
+                            <tr>
+                                <td>
+                                    @counts
+                                </td>
+                                <td>
+                                    @items.CategoryName
+                                </td>
+                                <td>
+                                    @items.Count
+                                </td>
+                                <td>
+                                    @items.TotalAmount
+                                </td>
+                            </tr>
+                            counts = counts + 1;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <h4 style="text-align:center">Less Stock</h4>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                S.N.
+                            </th>
+                           <th>
+                               Category
+                           </th>
+                            <th>
+                                Product
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @{
+                            int count = 1;
+                        }
+                        @foreach(var items in Model.StockInfos)
+                        {
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+                                <td>
+                                    @items.CategoryInfo.CategoryName
+                                </td>
+                                <td>
+                                    @items.ProductInfo.ProductName
+                                </td>
+                                <td>
+                                    @items.Quantity
+                                </td>
+                            </tr>
+                            count = count + 1;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
