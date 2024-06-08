@@ -13,9 +13,11 @@ using IMS.Models.ViewModels;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IMS.web.Controllers
 {
+    [Authorize(Roles = "SUPERADMIN,ADMIN")]
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -58,24 +60,23 @@ namespace IMS.web.Controllers
             IEnumerable<UserInfo> userInfos = new List<UserInfo>();
 
             var roleinfo = await _roleManager.FindByIdAsync(user.UserRoleId);
-
-
+            dynamic storeId;
+            storeId = new SqlParameter("@storeId", SqlDbType.Int) { Value = 0 };
             if (roleinfo.Name == "SUPERADMIN")
             {
-                var result = _rawSqlRepository.FromSql<UserInfo>(
-                "usp_GetEmployee @storeId",
-                new SqlParameter("@storeId", user.StoreId)
-            ).ToList();
-                userInfos = result;
+                storeId = new SqlParameter("@storeId", SqlDbType.Int) { Value = DBNull.Value };
             }
             else
             {
+                storeId = new SqlParameter("@storeId", SqlDbType.Int) { Value = user.StoreId };
+            }
+
                 var result = _rawSqlRepository.FromSql<UserInfo>(
                  "usp_GetEmployee @storeId",
-                 new SqlParameter("@storeId", user.StoreId)
-             ).ToList();
+                 storeId
+             );
                 userInfos = result;
-            }
+            
 
 
 
@@ -180,5 +181,46 @@ namespace IMS.web.Controllers
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
+        public async Task<IActionResult> UserStatus(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            bool status = false;
+            if (user.IsActive == true)
+            {
+                status = false;
+            }
+            else
+            {
+                status = true;
+            }
+            user.IsActive = status;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ResetPassword(string Id)
+        {
+            RegisterViewModel registerViewModel = new RegisterViewModel();
+            var user = await _userManager.FindByIdAsync(Id);          
+            
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            registerViewModel.Email = user.Email;
+            registerViewModel.Code = code;
+            registerViewModel.Id = Id;
+            return View(registerViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(RegisterViewModel registerViewModel)
+        {
+            var user = await _userManager.FindByIdAsync(registerViewModel.Id);
+
+            var result = await _userManager.ResetPasswordAsync(user, registerViewModel.Code, registerViewModel.Password);
+            TempData["success"] = "Password Reset Sucessfully";
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

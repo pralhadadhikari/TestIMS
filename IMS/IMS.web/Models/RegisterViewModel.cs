@@ -32,5 +32,7 @@ namespace IMS.web.Models
         public string CreatedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public string Code { get; set; }
+        public string Id { get; set; }
     }
 }

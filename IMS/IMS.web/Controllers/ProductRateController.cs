@@ -53,7 +53,7 @@ namespace IMS.web.Controllers
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
             ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
-            var rateRateInfo = await _productRateInfo.GetAllAsync();
+            var rateRateInfo = await _productRateInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
 
             return View(rateRateInfo);
         }

@@ -68,7 +68,7 @@
                             }
                             else
                             {
-                                <a class="btn btn-sucess" onclick="active('@items.Id')">Active</a>
+                                <a class="btn btn-success" onclick="active('@items.Id')">Active</a>
                             }
 
 
@@ -89,7 +89,10 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function active(itemid) {
-            alert(itemid);
+            window.location.href = '/Account/UserStatus?Id=' + itemid;
+        }
+        function reset(itemid) {
+            window.location.href = '/Account/ResetPassword?Id=' + itemid;
         }
     </script>
 }

@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace IMS.web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "ADMIN,COUNTER,STORE")]
     public class DashboardController : Controller
     {
         private readonly ICrudService<SupplierInfo> _supplierInfo;
@@ -61,7 +61,7 @@ namespace IMS.web.Controllers
               "usp_getDashboardIndex @storeId",
               new SqlParameter("@storeId", user.StoreId)
           ).ToList();
-            dashboardViewModel.DashboardIndex = results.FirstOrDefault();
+            dashboardViewModel.DashboardIndex = results.FirstOrDefault() ?? new DashboardIndex();
             return View(dashboardViewModel);
         }
     }

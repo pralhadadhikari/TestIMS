@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kfrI27ULH5GP8WaYuPYY+DibU9ZSZrLNCGqA2de2ON0=",
+  "Hash": "FJ4LEHU+rLhlDi25X7Nav/h7xksNUALy/Dm9/LJgbc8=",
   "Source": "IMS.web",
   "BasePath": "_content/IMS.web",
   "Mode": "Default",
@@ -1195,6 +1195,25 @@
       "OriginalItemSpec": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\IMS.web.bundle.scp.css"
     },
     {
+      "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\css\\bootstrap.min.css",
+      "SourceId": "IMS.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\",
+      "BasePath": "_content/IMS.web",
+      "RelativePath": "css/bootstrap.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootstrap.min.css"
+    },
+    {
       "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\css\\site.css",
       "SourceId": "IMS.web",
       "SourceType": "Discovered",
@@ -1404,6 +1423,25 @@
       "OriginalItemSpec": "wwwroot\\images\\test2.jpg"
     },
     {
+      "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\images\\user.jpg",
+      "SourceId": "IMS.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\",
+      "BasePath": "_content/IMS.web",
+      "RelativePath": "images/user.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\user.jpg"
+    },
+    {
       "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\js\\site.js",
       "SourceId": "IMS.web",
       "SourceType": "Discovered",
@@ -1478,25 +1516,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
-    },
-    {
-      "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
-      "SourceId": "IMS.web",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\",
-      "BasePath": "_content/IMS.web",
-      "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
       "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
@@ -2675,6 +2694,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ProductImage\\602629be-210e-493d-b40a-bc1206b2a5e0_fruits4.png"
+    },
+    {
+      "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\ProductImage\\7270b6d0-a8ab-4970-b71f-5dff1ee77cc6_tomato.jpeg",
+      "SourceId": "IMS.web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\",
+      "BasePath": "_content/IMS.web",
+      "RelativePath": "ProductImage/7270b6d0-a8ab-4970-b71f-5dff1ee77cc6_tomato.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ProductImage\\7270b6d0-a8ab-4970-b71f-5dff1ee77cc6_tomato.jpeg"
     },
     {
       "Identity": "D:\\dotnetprog\\TestIMS\\IMS\\IMS.web\\wwwroot\\ProductImage\\8ff73040-6e89-4b2e-bc75-61d1169f8f4a_fruits4.png",
