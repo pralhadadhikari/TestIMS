@@ -11,8 +11,9 @@ namespace IMS.Models.Entity
     {
         [Required]
 
-        [Display(Name = "Unit Name *")]
+        [Display(Name = "Unit Name")]
         public string UnitName { get;set; }
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

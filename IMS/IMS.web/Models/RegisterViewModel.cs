@@ -18,15 +18,22 @@ namespace IMS.web.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required]
         public string Address { get; set; }
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        [Display(Name = "Store Name")]
         public int StoreId { get; set; }
+        [Display(Name = "User Role")]
         public string UserRoleId { get; set; }
         public string ProfileUrl { get; set; }
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

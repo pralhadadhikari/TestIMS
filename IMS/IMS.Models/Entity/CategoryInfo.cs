@@ -17,6 +17,7 @@ namespace IMS.Models.Entity
         [Display(Name = "Description")]
         public string CategoryDescription { get; set; }
         public int StoreInfoId { get; set; }
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

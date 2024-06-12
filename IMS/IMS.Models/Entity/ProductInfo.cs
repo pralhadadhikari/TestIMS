@@ -11,6 +11,8 @@ namespace IMS.Models.Entity
 {
     public class ProductInfo:BaseEntity
     {
+        [Required]
+        [Display(Name = "Category Name")]
         public int CategoryInfoId { get; set; }
         [Required]
         [Display(Name = "Product Name")]
@@ -25,6 +27,7 @@ namespace IMS.Models.Entity
         [NotMapped]
         public IFormFile ImageFile { get;set; }
         public string ImageUrl { get;set; }
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

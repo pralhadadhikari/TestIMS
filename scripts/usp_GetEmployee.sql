@@ -6,7 +6,7 @@ exec usp_GetEmployee @storeId=2
 */
 CREATE PROCEDURE usp_GetEmployee
 (
-    @storeId INT
+    @storeId INT null
 )
 AS
 BEGIN
@@ -15,5 +15,5 @@ BEGIN
     FROM AspNetUsers u 
     LEFT JOIN Roles r ON u.UserRoleId = r.RoleId
 	Left Join StoreInfo s on s.Id=u.StoreId
-    WHERE StoreId = @storeId
+    WHERE ((@storeId is null) or (StoreId = @storeId))
 END

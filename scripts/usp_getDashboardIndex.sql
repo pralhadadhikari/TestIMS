@@ -2,6 +2,9 @@ if exists(select * from sys.objects where OBJECT_ID=OBJECT_ID(N'usp_getDashboard
  drop procedure usp_getDashboardIndex
  Go
 
+ /*
+ exec usp_getDashboardIndex @storeId=1002
+*/
 create proc usp_getDashboardIndex
 (
 	@storeId int null
@@ -12,7 +15,7 @@ begin
 
 select *,(Sucessful+Canelled) as Completed from
 
-(select SUM(TotalAmount) as TotalTransaction ,COUNT(*) as Sucessful from ProductInvoiceInfo
+(select COALESCE(SUM(TotalAmount), 0) AS TotalTransaction ,COUNT(*) as Sucessful from ProductInvoiceInfo
 where BillStatus=1 and StoreInfoId=@storeId) a
 
 cross join

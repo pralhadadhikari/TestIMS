@@ -71,8 +71,9 @@
                                 <a class="btn btn-success" onclick="active('@items.Id')">Active</a>
                             }
 
-
                             <a class="btn btn-primary" onclick="reset('@items.Id')">Reset</a>
+
+                            <a class="btn btn-primary" onclick="resetlink('@items.Email')">Reset Link</a>
                         </td>
                     </tr>
                     count = count + 1;
@@ -93,6 +94,9 @@
         }
         function reset(itemid) {
             window.location.href = '/Account/ResetPassword?Id=' + itemid;
+        }
+        function resetlink(itememail) {
+            window.location.href = '/Account/ResetPasswordLink?email=' + itememail;
         }
     </script>
 }

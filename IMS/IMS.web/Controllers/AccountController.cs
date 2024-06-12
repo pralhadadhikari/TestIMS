@@ -218,7 +218,51 @@ namespace IMS.web.Controllers
             var user = await _userManager.FindByIdAsync(registerViewModel.Id);
 
             var result = await _userManager.ResetPasswordAsync(user, registerViewModel.Code, registerViewModel.Password);
-            TempData["success"] = "Password Reset Sucessfully";
+            TempData["success"] = "Password Reset Completed";
+            return RedirectToAction(nameof(Index));
+        }
+
+       
+        public async Task<IActionResult> ResetPasswordLink(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            
+            // For more information on how to enable account confirmation and password reset please
+            // visit https://go.microsoft.com/fwlink/?LinkID=532713
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ResetPassword",
+                pageHandler: null,
+                values: new { area = "Identity", code },
+                protocol: Request.Scheme);
+
+            await _emailSender.SendEmailAsync(
+                email,
+                "Reset Password",
+                $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> EmailConformLink()
+        {
+
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = await _userManager.FindByIdAsync(userId);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { userId = userId, code = code },
+                protocol: Request.Scheme);
+            await _emailSender.SendEmailAsync(
+                user.Email,
+                "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - IMS</title>
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/IMS.web.styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -54,7 +54,7 @@
                 .sidebar a:hover {
                     background-color: #D4F2EE;
                 }
-
+                         
         .content {
             margin-left: 250px;
             padding: 20px;
@@ -83,7 +83,7 @@
             box-shadow: none;
             transition: none;
             background-color: #A0E8CD;
-            color:black;
+            color: black;
         }
 
         #sidebarToggle {
@@ -102,13 +102,13 @@
             }
 
 
-            .sidebar .dropdown-menu a {
-                padding: 10px 20px; /* Adjust padding as needed */
-            }
+        .sidebar .dropdown-menu a {
+            padding: 10px 20px; /* Adjust padding as needed */
+        }
 
-                .sidebar .dropdown-menu a:hover {
-                    background-color: #D4F2EE;
-                }
+            .sidebar .dropdown-menu a:hover {
+                background-color: #D4F2EE;
+            }
 
     </style>
 </head>
@@ -123,56 +123,55 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     @* <ul class="navbar-nav me-auto">
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="StoreInfo" asp-action="Index">Store</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Index">User Settings</a>
-                            </li>
-                        }
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("ADMIN"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Unit" asp-action="Index">Unit</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Rack" asp-action="Index">Rack</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Supplier" asp-action="Index">Supplier</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Customer" asp-action="Index">Customer</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Product" asp-action="Index">Product</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="ProductRate" asp-action="Index">Purchase</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Transaction" asp-action="Transaction">Transaction</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Report" asp-action="Index">Custom Report</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Report" asp-action="DetailReport">Detail Report</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Report" asp-action="Stock Report">Stock</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Index">Users Management</a>
-                            </li>
-                        }
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("SUPERADMIN"))
+                    {
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="StoreInfo" asp-action="Index">Store</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Index">User Settings</a>
+                    </li>
+                    }
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("ADMIN"))
+                    {
+                    <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Unit" asp-action="Index">Unit</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Rack" asp-action="Index">Rack</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Supplier" asp-action="Index">Supplier</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Customer" asp-action="Index">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="ProductRate" asp-action="Index">Purchase</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Transaction" asp-action="Transaction">Transaction</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-area="" asp-controller="Report" asp-action="Index">Custom Report</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Report" asp-action="DetailReport">Detail Report</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Report" asp-action="Stock Report">Stock</a>
+                    </div>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link " asp-area="" asp-controller="Account" asp-action="Index">Users Management</a>
+                    </li>
+                    }
                     </ul> *@
                     <ul class="navbar-nav me-auto">
-
                     </ul>
                     <partial name="_LoginPartial"></partial>
                 </div>
@@ -220,13 +219,48 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Report" asp-action="Index">Custom Report</a>
+                            <a class="dropdown-item text-dark text-end" asp-area="" asp-controller="Report" asp-action="Index">Custom Report</a>
                             <a class="dropdown-item text-dark" asp-area="" asp-controller="Report" asp-action="DetailReport">Detail Report</a>
                             <a class="dropdown-item text-dark" asp-area="" asp-controller="Report" asp-action="Stock">Stock</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Users Management</a>
+                    </li>
+                }
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("COUNTER"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Unit" asp-action="Index">Unit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Rack" asp-action="Index">Rack</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Supplier" asp-action="Index">Supplier</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="ProductRate" asp-action="Index">Purchase Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Transaction">Transaction</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Report</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item text-dark text-end" asp-area="" asp-controller="Report" asp-action="Index">Custom Report</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Report" asp-action="DetailReport">Detail Report</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Report" asp-action="Stock">Stock</a>
+                        </div>
                     </li>
                 }
             </ul>

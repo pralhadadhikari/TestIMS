@@ -11,19 +11,24 @@ namespace IMS.Models.Entity
     {
         [Required(ErrorMessage ="Please Input Store Name")]
         
-        [Display(Name ="*Store Name")]
+        [Display(Name ="Store Name")]
         public string StoreName { get;set;}
         [Required]
         public string Address { get; set; }
         [Required]
         [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [Required]
+        [Display(Name = "Registration Number")]
         public string RegistrationNo { get; set; }
         [Required]
+        [Display(Name = "Pan Number")]
         public string PanNo { get; set; }
+        [Display(Name = "Logo")]
         public string LogoUrl { get; set; }
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

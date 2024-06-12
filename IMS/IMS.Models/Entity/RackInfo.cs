@@ -13,6 +13,7 @@ namespace IMS.Models.Entity
         [Display(Name = "Rack Name")]
         public string RackName { get; set; }
         public int StoreInfoId { get;set; }
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
