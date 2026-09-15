@@ -25,6 +25,7 @@ namespace IMS.web.Controllers
         private readonly ICrudService<ProductInvoiceDetailInfo> _productInvoiceDetailInfo;
         private readonly ICrudService<StoreInfo> _storeInfo;
         private readonly IRawSqlRepository _rawSqlRepository;
+        private readonly IRedisService _redisService;
 
         public TransactionController(ICrudService<ProductInfo> productInfo,
             ICrudService<CategoryInfo> categoryInfo,
@@ -39,7 +40,8 @@ namespace IMS.web.Controllers
             ICrudService<ProductInvoiceInfo> productInvoiceInfo,
             ICrudService<ProductInvoiceDetailInfo> productInvoiceDetailInfo,
              ICrudService<StoreInfo> storeInfo,
-            IRawSqlRepository rawSqlRepository
+            IRawSqlRepository rawSqlRepository,
+            IRedisService redisService
             )
         {
             _productInfo = productInfo;
@@ -56,6 +58,7 @@ namespace IMS.web.Controllers
             _productInvoiceDetailInfo = productInvoiceDetailInfo;
             _storeInfo = storeInfo;
             _rawSqlRepository = rawSqlRepository;
+            _redisService = redisService;
         }
         public async Task<IActionResult> Index()
         {
@@ -72,13 +75,85 @@ namespace IMS.web.Controllers
             TransactionViewModel transactionViewModel = new TransactionViewModel();
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userId);
-            ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
-            ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
-            ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
+            //ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            //ViewBag.ProductInfos = await _productInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            //ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
 
-            ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
-            ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
-            ViewBag.CustomerInfos = await _customerInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId);
+            //ViewBag.RackInfos = await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            //ViewBag.SupplierInfos = await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
+            //ViewBag.CustomerInfos = await _customerInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId);
+
+            var categoryKey = $"ims:store:{user.StoreId}:categories";
+            var categories = await _redisService.GetAsync<List<CategoryInfo>>(categoryKey);
+
+            if (categories == null)
+            {
+                categories = (await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId)).ToList();
+                await _redisService.SetAsync(categoryKey, categories, TimeSpan.FromMinutes(10));
+            }
+
+            ViewBag.CategoryInfos = categories;
+
+
+            var productKey = $"ims:store:{user.StoreId}:products";
+            var products = await _redisService.GetAsync<List<ProductInfo>>(productKey);
+
+            if (products == null)
+            {
+                products = (await _productInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId)).ToList();
+                await _redisService.SetAsync(productKey, products, TimeSpan.FromMinutes(10));
+            }
+
+            ViewBag.ProductInfos = products;
+
+
+            var unitKey = "ims:units:active";
+            var units = await _redisService.GetAsync<List<UnitInfo>>(unitKey);
+
+            if (units == null)
+            {
+                units = (await _unitInfo.GetAllAsync(p => p.IsActive == true)).ToList();
+                await _redisService.SetAsync(unitKey, units, TimeSpan.FromMinutes(30));
+            }
+
+            ViewBag.UnitInfos = units;
+
+
+            var rackKey = $"ims:store:{user.StoreId}:racks";
+            var racks = await _redisService.GetAsync<List<RackInfo>>(rackKey);
+
+            if (racks == null)
+            {
+                racks = (await _rackInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId)).ToList();
+                await _redisService.SetAsync(rackKey, racks, TimeSpan.FromMinutes(10));
+            }
+
+            ViewBag.RackInfos = racks;
+
+
+            var supplierKey = $"ims:store:{user.StoreId}:suppliers";
+            var suppliers = await _redisService.GetAsync<List<SupplierInfo>>(supplierKey);
+
+            if (suppliers == null)
+            {
+                suppliers = (await _supplierInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId)).ToList();
+                await _redisService.SetAsync(supplierKey, suppliers, TimeSpan.FromMinutes(10));
+            }
+
+            ViewBag.SupplierInfos = suppliers;
+
+
+            var customerKey = $"ims:store:{user.StoreId}:customers";
+            var customers = await _redisService.GetAsync<List<CustomerInfo>>(customerKey);
+
+            if (customers == null)
+            {
+                customers = (await _customerInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId)).ToList();
+                await _redisService.SetAsync(customerKey, customers, TimeSpan.FromMinutes(10));
+            }
+
+            ViewBag.CustomerInfos = customers;
+
             return View(transactionViewModel);
         }
 
@@ -89,8 +164,19 @@ namespace IMS.web.Controllers
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userId);
-            var productList = await _productInfo.GetAllAsync(p => p.CategoryInfoId == CategoryId && p.StoreInfoId == user.StoreId);
+            //var productList = await _productInfo.GetAllAsync(p => p.CategoryInfoId == CategoryId && p.StoreInfoId == user.StoreId);
+            var productKey = $"ims:store:{user.StoreId}:products:category:{CategoryId}";
 
+            var productList = await _redisService.GetAsync<List<ProductInfo>>(productKey);
+
+            if (productList == null)
+            {
+                productList = (await _productInfo.GetAllAsync(p => p.CategoryInfoId == CategoryId && p.StoreInfoId == user.StoreId)).ToList();
+
+                await _redisService.SetAsync(productKey, productList, TimeSpan.FromMinutes(10));
+            }
+
+            return Json(new { productList });
             return Json(new { productList });
         }
 
@@ -98,7 +184,22 @@ namespace IMS.web.Controllers
         [Route("/api/Transaction/getUnit")]
         public async Task<IActionResult> GetUnit(int ProductId)
         {
-            var product = await _productInfo.GetAsync(ProductId);
+            //var product = await _productInfo.GetAsync(ProductId);
+
+            //return Json(new { product });
+            var productKey = $"ims:product:{ProductId}";
+
+            var product = await _redisService.GetAsync<ProductInfo>(productKey);
+
+            if (product == null)
+            {
+                product = await _productInfo.GetAsync(ProductId);
+
+                if (product != null)
+                {
+                    await _redisService.SetAsync(productKey, product, TimeSpan.FromMinutes(10));
+                }
+            }
 
             return Json(new { product });
         }
@@ -129,8 +230,26 @@ namespace IMS.web.Controllers
         [Route("/api/Transaction/getCustomer")]
         public async Task<IActionResult> GetCustomer(int custometId)
         {
-            var customerInfo = await _customerInfo.GetAsync(custometId);
+            //var customerInfo = await _customerInfo.GetAsync(custometId);
+            //return Json(new { customerInfo });
+
+            var customerKey = $"ims:customer:{custometId}";
+
+            var customerInfo = await _redisService.GetAsync<CustomerInfo>(customerKey);
+
+            if (customerInfo == null)
+            {
+                customerInfo = await _customerInfo.GetAsync(custometId);
+
+                if (customerInfo != null)
+                {
+                    await _redisService.SetAsync(customerKey, customerInfo, TimeSpan.FromMinutes(10));
+                }
+            }
+
             return Json(new { customerInfo });
+
+
         }
 
         [HttpPost]

@@ -31,7 +31,7 @@ namespace IMS.Models.Entity
         [Display(Name = "Quantity")]
         public float Quantity { get; set; }
        
-        [Display(Name = "Unit")]
+        [Display(Name = "SoldQuantity")]
         public float SoldQuantity { get; set; }
         
         [Display(Name = "Remaining Quantity")]
@@ -40,9 +40,8 @@ namespace IMS.Models.Entity
         [Display(Name = "Batch No")]
         public string BatchNo { get; set; }
         [Required]
-        [Display(Name = "Unit")]
+        [Display(Name = "PurchasedDate")]
         public DateTime PurchasedDate { get; set; }
-        [Required]
         [Display(Name = "Expiry Date")]
         public DateTime? Expirydate { get; set; }
         [Required]

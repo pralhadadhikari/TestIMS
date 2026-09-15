@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\IMS.web.props" />
-</Project>

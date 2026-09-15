@@ -17,10 +17,10 @@ namespace IMS.web.Migrations.IMSDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.29")
+                .HasAnnotation("ProductVersion", "8.0.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("IMS.Models.Entity.CategoryInfo", b =>
                 {
@@ -28,7 +28,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CategoryDescription")
                         .IsRequired()
@@ -80,7 +80,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -136,7 +136,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryInfoId")
                         .HasColumnType("int");
@@ -203,7 +203,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -245,7 +245,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BillStatus")
                         .HasColumnType("int");
@@ -321,7 +321,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BatchNo")
                         .IsRequired()
@@ -346,7 +346,6 @@ namespace IMS.web.Migrations.IMSDb
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime?>("Expirydate")
-                        .IsRequired()
                         .HasColumnType("datetime");
 
                     b.Property<bool>("IsActive")
@@ -409,7 +408,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -455,7 +454,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryInfoId")
                         .HasColumnType("int");
@@ -513,7 +512,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -583,7 +582,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -652,7 +651,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -726,7 +725,7 @@ namespace IMS.web.Migrations.IMSDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -759,6 +758,129 @@ namespace IMS.web.Migrations.IMSDb
                     b.HasKey("Id");
 
                     b.ToTable("UnitInfo");
+                });
+
+            modelBuilder.Entity("IMS.Models.ViewModels.CustomReportViewModel", b =>
+                {
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("NetAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.ToTable("CustomReportViewModels");
+                });
+
+            modelBuilder.Entity("IMS.Models.ViewModels.DashboardIndex", b =>
+                {
+                    b.Property<int>("Canelled")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Completed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sucessful")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalTransaction")
+                        .HasColumnType("float");
+
+                    b.ToTable("DashboardIndices");
+                });
+
+            modelBuilder.Entity("IMS.Models.ViewModels.DashboardList", b =>
+                {
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.ToTable("DashboardLists");
+                });
+
+            modelBuilder.Entity("IMS.Models.ViewModels.ReportDetailViewModel", b =>
+                {
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("SupplierName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("ReportDetailViewModels");
+                });
+
+            modelBuilder.Entity("IMS.Models.ViewModels.UserInfo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StoreName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserInfos");
                 });
 
             modelBuilder.Entity("IMS.Models.Entity.CategoryInfo", b =>

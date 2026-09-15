@@ -1,4 +1,5 @@
-﻿using IMS.Infrastructure.IRepository;
+﻿using Azure.Core;
+using IMS.Infrastructure.IRepository;
 using IMS.Models.Entity;
 using IMS.web.Models;
 using Microsoft.AspNetCore.Identity;
@@ -13,11 +14,14 @@ namespace IMS.web.Controllers
         private readonly ICrudService<UnitInfo> _unitInfo;
         private readonly ICrudService<StoreInfo> _storeInfo;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRedisService _redisService;
+
         public ProductController(ICrudService<ProductInfo> productInfo,
             ICrudService<CategoryInfo> categoryInfo,
             ICrudService<UnitInfo> unitInfo,
             ICrudService<StoreInfo> storeInfo,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager,
+            IRedisService redisService
             )
         {
             _productInfo = productInfo;
@@ -25,6 +29,7 @@ namespace IMS.web.Controllers
             _unitInfo = unitInfo;
             _storeInfo = storeInfo;
             _userManager = userManager;
+            _redisService = redisService;
         }
 
         public async Task<IActionResult> Index()
@@ -60,6 +65,7 @@ namespace IMS.web.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             ViewBag.CategoryInfos = await _categoryInfo.GetAllAsync(p => p.IsActive == true && p.StoreInfoId == user.StoreId);
             ViewBag.UnitInfos = await _unitInfo.GetAllAsync(p => p.IsActive == true);
+            int storeId = user?.StoreId ?? 0;
             if (ModelState.IsValid)
             {
                 try
@@ -75,13 +81,15 @@ namespace IMS.web.Controllers
                         {
                             Directory.CreateDirectory(fileDirectory);
                         }
-                        string uniqueFileName = Guid.NewGuid() + "_" + productInfo.ImageFile.FileName;
-                        string filePath = Path.Combine(Path.GetFullPath($"wwwroot/ProductImage"), uniqueFileName);
+                        var extension = Path.GetExtension(productInfo.ImageFile.FileName);
+                        var fileName = $"{Guid.NewGuid()}{extension}";
+                        //string uniqueFileName = Guid.NewGuid() + "_" + productInfo.ImageFile.FileName;
+                        string filePath = Path.Combine(Path.GetFullPath($"wwwroot/ProductImage"), fileName);
 
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await productInfo.ImageFile.CopyToAsync(fileStream);
-                            productInfo.ImageUrl = $"ProductImage/" + uniqueFileName;
+                            productInfo.ImageUrl = $"ProductImage/" + fileName;
 
                         }
 
@@ -95,6 +103,8 @@ namespace IMS.web.Controllers
                         await _productInfo.InsertAsync(productInfo);
 
                         TempData["success"] = "Data Added Sucessfully";
+                        await _redisService.RemoveAsync($"ims:store:{storeId}:products");
+                        await _redisService.RemoveAsync($"ims:store:{storeId}:products:category:{productInfo.CategoryInfoId}");
                     }
                     else
                     {
@@ -109,7 +119,10 @@ namespace IMS.web.Controllers
                         }
                         await _productInfo.UpdateAsync(OrgproductInfo);
                         TempData["success"] = "Data Updated Sucessfully";
+                        await _redisService.RemoveAsync($"ims:store:{storeId}:products");
+                        await _redisService.RemoveAsync($"ims:store:{storeId}:products:category:{productInfo.CategoryInfoId}");
                     }
+
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)

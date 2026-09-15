@@ -1,17 +1,33 @@
-using IMS.web.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using IMS.web.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using IMS.Infrastructure.Services;
 using IMS.Infrastructure;
 using IMS.Infrastructure.IRepository;
-using IMS.Infrastructure.Repository.CRUD;
 using IMS.Infrastructure.Repository;
-using System.Security.Claims;
+using IMS.Infrastructure.Repository.CRUD;
+using IMS.Infrastructure.Services;
+using IMS.web.Data;
+using IMS.web.Middleware;
+using IMS.web.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using StackExchange.Redis;
+using System.Security.Claims;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File(
+        "Logs/ims-.log",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 30,
+        shared: true)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -35,13 +51,16 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+var redisConnection = builder.Configuration.GetConnectionString("Redis");
 
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnection));
 
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddTransient(typeof(ICrudService<>), typeof(CrudService<>));
 builder.Services.AddTransient<IRawSqlRepository, RawSqlRepository>();
 builder.Services.AddTransient<IGenericRepository, GenericRepository>();
+builder.Services.AddTransient<IRedisService, RedisService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -78,12 +97,14 @@ using (var scope = app.Services.CreateScope())
     await SeedingData.InitializeAsync(services);
 }
 
-
+app.UseMiddleware<GlobalExceptionMiddleware>();
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-}
+//if (!app.Environment.IsDevelopment())
+//{
+//    app.UseExceptionHandler("/Home/Error");
+//}
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseStaticFiles();
 
 app.UseRouting();

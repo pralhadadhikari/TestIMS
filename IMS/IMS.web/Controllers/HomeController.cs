@@ -28,5 +28,9 @@ namespace IMS.web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult TestError()
+        {
+            throw new Exception("THIS IS MY TEST EXCEPTION");
+        }
     }
 }

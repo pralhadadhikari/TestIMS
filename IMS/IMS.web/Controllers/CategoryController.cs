@@ -12,15 +12,18 @@ namespace IMS.web.Controllers
         private readonly ICrudService<CategoryInfo> _categoryInfo;
         private readonly ICrudService<StoreInfo> _storeInfo;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRedisService _redisService;
 
         public CategoryController(ICrudService<CategoryInfo> categoryInfo,
             ICrudService<StoreInfo> storeInfo,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager,
+            IRedisService redisService
             )
         {
             _categoryInfo = categoryInfo;
             _storeInfo = storeInfo;
             _userManager = userManager;
+            _redisService = redisService;
         }
         public async Task<IActionResult> Index()
         {           
@@ -57,7 +60,7 @@ namespace IMS.web.Controllers
                         categoryInfo.CreatedBy = userId;
                         categoryInfo.StoreInfoId = user.StoreId;
                         await _categoryInfo.InsertAsync(categoryInfo);
-
+                        await _redisService.RemoveAsync($"ims:store:{categoryInfo.StoreInfoId}:categories");
                         TempData["success"] = "Data Added Sucessfully";
                     }
                     else
@@ -69,6 +72,7 @@ namespace IMS.web.Controllers
                         OrgCategoryInfo.ModifiedDate = DateTime.Now;
                         OrgCategoryInfo.ModifiedBy = userId;
                         await _categoryInfo.UpdateAsync(OrgCategoryInfo);
+                        await _redisService.RemoveAsync($"ims:store:{categoryInfo.StoreInfoId}:categories");
                         TempData["success"] = "Data Updated Sucessfully";
                     }
                     return RedirectToAction(nameof(Index));

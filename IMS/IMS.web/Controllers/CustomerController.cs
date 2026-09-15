@@ -11,14 +11,18 @@ namespace IMS.web.Controllers
         private readonly ICrudService<CustomerInfo> _customerInfo;
         private readonly ICrudService<StoreInfo> _storeInfo;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRedisService _redisService;
+
         public CustomerController(ICrudService<CustomerInfo> customerInfo,
             ICrudService<StoreInfo> storeInfo,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager,
+            IRedisService redisService
             )
         {
             _customerInfo = customerInfo;
             _storeInfo = storeInfo;
             _userManager = userManager;
+            _redisService = redisService;
         }
 
         public async Task<IActionResult> Index()
@@ -55,6 +59,7 @@ namespace IMS.web.Controllers
                         customerInfo.CreatedBy = userId;
                         customerInfo.StoreInfoId = user.StoreId;
                         await _customerInfo.InsertAsync(customerInfo);
+                        await _redisService.RemoveAsync($"ims:store:{customerInfo.StoreInfoId}:customers");
 
                         TempData["success"] = "Data Added Sucessfully";
                     }
@@ -68,6 +73,8 @@ namespace IMS.web.Controllers
                         OrgcustomerInfo.PanNo = customerInfo.PanNo;                        
                         await _customerInfo.UpdateAsync(OrgcustomerInfo);
                         TempData["success"] = "Data Updated Sucessfully";
+                        await _redisService.RemoveAsync($"ims:customer:{customerInfo.Id}");
+                        await _redisService.RemoveAsync($"ims:store:{customerInfo.StoreInfoId}:customers");
                     }
                     return RedirectToAction(nameof(Index));
                 }
@@ -93,8 +100,17 @@ namespace IMS.web.Controllers
             model.StoreInfoId = user.StoreId;
             var result = await _customerInfo.InsertAsync(model);
             model.Id = result;
+
+            await _redisService.RemoveAsync($"ims:store:{model.StoreInfoId}:customers");
+
             return Json (model);
         }
-
+        public async Task<IActionResult> Test()
+        {
+            var userId = "testuser";
+            var user = await _userManager.FindByIdAsync(userId);
+            var customerInfos = await _customerInfo.GetAllAsync(p => p.StoreInfoId == user.StoreId);
+            return View(customerInfos);
+        }
     }
 }
