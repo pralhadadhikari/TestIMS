@@ -29,3 +29,6 @@ jobs:
 
       - name: Run unit tests
         run: dotnet test IMS/IMSUntTest/IMSUntTest.csproj --no-build --configuration Release
+
+      - name: Build Docker image
+        run: docker build -t testims-web:ci -f IMS/Dockerfile IMS
