@@ -1,0 +1,31 @@
+name: TestIMS CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore IMS/IMS.sln
+
+      - name: Build solution
+        run: dotnet build IMS/IMS.sln --no-restore --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test IMS/IMSUntTest/IMSUntTest.csproj --no-build --configuration Release
