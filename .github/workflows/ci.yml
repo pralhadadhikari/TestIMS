@@ -62,6 +62,10 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
 
+      - name: Install kubectl and kubelogin
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: az aks install-cli
+
       - name: Set AKS context
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: azure/aks-set-context@v5
