@@ -1,4 +1,4 @@
-name: TestIMS CI
+name: TestIMS CI-CD
 
 on:
   push:
@@ -11,6 +11,8 @@ on:
 env:
   ACR_LOGIN_SERVER: testimsregistry.azurecr.io
   IMAGE_NAME: testims-web
+  RESOURCE_GROUP: TestIMS-RG
+  AKS_CLUSTER: TestIMS-AKS
 
 jobs:
   build-and-test:
@@ -35,22 +37,48 @@ jobs:
         run: dotnet test IMS/IMSUntTest/IMSUntTest.csproj --no-build --configuration Release
 
       - name: Login to Azure
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Login to Azure Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: az acr login --name testimsregistry
 
       - name: Build Docker image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: docker build -t ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} -f IMS/Dockerfile IMS
 
       - name: Tag Docker image as latest
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: docker tag ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Push Docker image with commit tag
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Push Docker image with latest tag
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
 
+      - name: Set AKS context
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: azure/aks-set-context@v5
+        with:
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.AKS_CLUSTER }}
+          admin: 'false'
+          use-kubelogin: 'true'
+
+      - name: Update TestIMS Web image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: kubectl set image deployment/testims-web testims-web=${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Wait for TestIMS Web rollout
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: kubectl rollout status deployment/testims-web --timeout=180s
+
+      - name: Verify AKS deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: kubectl get pods
